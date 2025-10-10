@@ -1,0 +1,327 @@
+/* Terminal Theme - Dark Mode */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+    color: #00ff00;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* Terminal Container */
+.terminal-container {
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+    background: #1a1a1a;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Terminal Header */
+.terminal-header {
+    background: #2d2d2d;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+    margin-right: 15px;
+}
+
+.btn {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.btn.close {
+    background: #ff5f56;
+}
+
+.btn.minimize {
+    background: #ffbd2e;
+}
+
+.btn.maximize {
+    background: #27c93f;
+}
+
+.terminal-title {
+    color: #a0a0a0;
+    font-size: 13px;
+    flex: 1;
+    text-align: center;
+}
+
+/* Terminal Body */
+.terminal-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #0a0a0a;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#terminal-output {
+    margin-bottom: 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.output-line {
+    margin-bottom: 4px;
+}
+
+.output-line.command {
+    color: #00ff00;
+}
+
+.output-line.error {
+    color: #ff6b6b;
+}
+
+.output-line.info {
+    color: #61afef;
+}
+
+.output-line.success {
+    color: #98c379;
+}
+
+.output-line.warning {
+    color: #e5c07b;
+}
+
+.directory {
+    color: #61afef;
+    font-weight: bold;
+}
+
+.file {
+    color: #abb2bf;
+}
+
+.executable {
+    color: #98c379;
+}
+
+/* Input Line */
+.input-line {
+    display: flex;
+    align-items: center;
+}
+
+.prompt {
+    color: #98c379;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+#terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #00ff00;
+    font-family: inherit;
+    font-size: inherit;
+    caret-color: #00ff00;
+}
+
+/* Vim Viewer */
+.vim-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1e1e1e;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    color: #d4d4d4;
+}
+
+.vim-viewer.hidden {
+    display: none;
+}
+
+.vim-header {
+    background: #2d2d2d;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #3a3a3a;
+}
+
+.vim-filename {
+    color: #61afef;
+    font-weight: bold;
+}
+
+.vim-help {
+    color: #888;
+    font-size: 12px;
+}
+
+.vim-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #1e1e1e;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.vim-footer {
+    background: #2d2d2d;
+    padding: 5px 15px;
+    font-size: 12px;
+    color: #888;
+    border-top: 1px solid #3a3a3a;
+}
+
+/* Content Styling in Vim Viewer */
+.vim-content h1 {
+    color: #61afef;
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.vim-content h2 {
+    color: #c678dd;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.vim-content h3 {
+    color: #e5c07b;
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.vim-content p {
+    color: #abb2bf;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.vim-content a {
+    color: #61afef;
+    text-decoration: none;
+}
+
+.vim-content a:hover {
+    text-decoration: underline;
+}
+
+.vim-content .meta {
+    color: #5c6370;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+.vim-content .divider {
+    border-top: 1px solid #3a3a3a;
+    margin: 20px 0;
+}
+
+.vim-content strong {
+    color: #e06c75;
+    font-weight: bold;
+}
+
+/* Link styling */
+a {
+    color: #61afef;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Scrollbar styling */
+.terminal-body::-webkit-scrollbar,
+.vim-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track,
+.vim-content::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+.terminal-body::-webkit-scrollbar-thumb,
+.vim-content::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover,
+.vim-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Animations */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.cursor {
+    animation: blink 1s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+
+    .terminal-container {
+        max-width: 100%;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .terminal-body {
+        font-size: 12px;
+        padding: 15px;
+    }
+
+    .vim-content {
+        padding: 15px;
+        font-size: 13px;
+    }
+
+    .vim-help {
+        display: none;
+    }
+}
+
