@@ -35,10 +35,13 @@ async function loadData() {
         const results = await Promise.all(promises);
         results.forEach(({ name, data }) => {
             content[name] = data;
+            console.log(`Loaded ${name}:`, data);
         });
         
         // Generate dynamic summaries for directories
         generateSummaries();
+        
+        console.log('Final content structure:', content);
         
         dataLoaded = true;
         return true;
@@ -335,7 +338,12 @@ function viewFile(filename) {
     }
 
     // Check if it's a directory summary - open interactive list
+    console.log('Checking directory for:', filename);
+    console.log('Content exists:', !!content[filename]);
+    console.log('Is directory:', content[filename]?.type === 'directory');
+    
     if (content[filename] && content[filename].type === 'directory') {
+        console.log('Opening interactive list for:', filename);
         openInteractiveList(filename);
         return;
     }

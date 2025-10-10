@@ -22,6 +22,13 @@
       "venue": "NAACL 2025 Findings",
       "links": "[Paper] https://arxiv.org/abs/2406.17186 | [Code] https://github.com/abehou/CLERC",
       "abstract": "Legal professionals need to write analyses that rely on citations to relevant precedents, i.e., previous case decisions. Intelligent systems assisting legal professionals in writing such documents provide great benefits but are challenging to design. Such systems need to help locate, summarize, and reason over salient precedents in order to be useful. To enable systems for such tasks, we work with legal professionals to transform a large open-source legal corpus into a dataset supporting two important backbone tasks: information retrieval (IR) and retrieval-augmented generation (RAG). This dataset CLERC (Case Law Evaluation Retrieval Corpus), is constructed for training and evaluating models on their ability to (1) find corresponding citations for a given piece of legal analysis and to (2) compile the text of these citations (as well as previous context) into a cogent analysis that supports a reasoning goal. We benchmark state-of-the-art models on CLERC, showing that current approaches still struggle: GPT-4o generates analyses with the highest ROUGE F-scores but hallucinates the most, while zero-shot IR models only achieve 48.3% recall@1000."
+    },
+    "(ICML 2024 GenLaw Workshop) L-FRESco: Factual Recall Evaluation Score for Legal Analysis Generation": {
+      "title": "L-FRESco: Factual Recall Evaluation Score for Legal Analysis Generation",
+      "authors": "Abe Bohan Hou,  Zhengping Jiang, Guanghui Qin, Orion Weller, Andrew Blair-Stanek, Benjamin Van Durme",
+      "venue": "ICML 2024 GenLaw Workshop",
+      "links": "[Paper] https://icml.cc/virtual/2024/39223",
+      "abstract": "Existing automatic tools evaluate the factuality of text generations based on factual precision, which measures the fraction of generated information being factually accurate. However, comprehensiveness and precision are both crucial aspects of reliable and verifiable text generation. In this work, we show that precision-based factuality metrics are limited in evaluating the comprehensiveness of text generations from certain domains, especially legal texts. We propose L-FRESco, {F}actual {R}ecall {E}valuation {Sco}re for {L}egal analysis generation. Inspired by FActScore, which decomposes generated text into atomic facts and then verifies their factuality, L-FRESco follows a Decompose-Then-Compare framework to compute similarity between the reference atomic claim and the generated atomic claim. Moreover, we explore a generalized variant, FRESco, and discuss its potentials to be applied across text domains."
     }
   }
 }
