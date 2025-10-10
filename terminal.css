@@ -188,9 +188,20 @@ body {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
+    overflow-x: hidden;
     background: #1e1e1e;
     white-space: pre-wrap;
     word-wrap: break-word;
+    word-break: break-word;
+}
+
+.vim-content pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    margin: 0;
+    font-family: inherit;
 }
 
 .vim-footer {

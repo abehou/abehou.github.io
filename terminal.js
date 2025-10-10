@@ -368,9 +368,9 @@ function viewFile(filename) {
 function formatFileContent(filename, file) {
     if (file.title) {
         // Publication or Experience format
-        let content = `╔═══════════════════════════════════════════════════════════════╗\n`;
-        content += `║ ${file.title.padEnd(61)} ║\n`;
-        content += `╚═══════════════════════════════════════════════════════════════╝\n\n`;
+        let content = `═══════════════════════════════════════════════════════════════\n`;
+        content += `${file.title}\n`;
+        content += `═══════════════════════════════════════════════════════════════\n\n`;
         
         if (file.authors) {
             content += `Authors: ${file.authors.replace(/<strong>/g, '').replace(/<\/strong>/g, '')}\n`;
@@ -429,9 +429,9 @@ function displayInteractiveList() {
     let displayContent = '';
     
     if (interactiveType === 'publications') {
-        displayContent = `╔═══════════════════════════════════════════════════════════════╗\n`;
-        displayContent += `║                        PUBLICATIONS                           ║\n`;
-        displayContent += `╚═══════════════════════════════════════════════════════════════╝\n\n`;
+        displayContent = `═══════════════════════════════════════════════════════════════\n`;
+        displayContent += `                        PUBLICATIONS                           \n`;
+        displayContent += `═══════════════════════════════════════════════════════════════\n\n`;
         displayContent += `Use ↑/↓ or j/k to navigate, Enter to view, q to quit\n\n`;
         displayContent += `───────────────────────────────────────────────────────────────\n\n`;
         
@@ -443,9 +443,9 @@ function displayInteractiveList() {
             displayContent += `───────────────────────────────────────────────────────────────\n\n`;
         });
     } else if (interactiveType === 'experiences') {
-        displayContent = `╔═══════════════════════════════════════════════════════════════╗\n`;
-        displayContent += `║                         EXPERIENCES                           ║\n`;
-        displayContent += `╚═══════════════════════════════════════════════════════════════╝\n\n`;
+        displayContent = `═══════════════════════════════════════════════════════════════\n`;
+        displayContent += `                         EXPERIENCES                           \n`;
+        displayContent += `═══════════════════════════════════════════════════════════════\n\n`;
         displayContent += `Use ↑/↓ or j/k to navigate, Enter to view, q to quit\n\n`;
         displayContent += `───────────────────────────────────────────────────────────────\n\n`;
         
@@ -455,9 +455,9 @@ function displayInteractiveList() {
             displayContent += `   ${fileData.organization} | ${fileData.duration}\n\n`;
         });
     } else if (interactiveType === 'blog') {
-        displayContent = `╔═══════════════════════════════════════════════════════════════╗\n`;
-        displayContent += `║                            BLOG                               ║\n`;
-        displayContent += `╚═══════════════════════════════════════════════════════════════╝\n\n`;
+        displayContent = `═══════════════════════════════════════════════════════════════\n`;
+        displayContent += `                            BLOG                               \n`;
+        displayContent += `═══════════════════════════════════════════════════════════════\n\n`;
         displayContent += `Use ↑/↓ or j/k to navigate, Enter to view, q to quit\n\n`;
         displayContent += `───────────────────────────────────────────────────────────────\n\n`;
         
@@ -469,8 +469,9 @@ function displayInteractiveList() {
     }
     
     vimViewer.classList.remove('hidden');
+    vimViewer.dataset.fromList = 'false'; // Reset the flag
     document.querySelector('.vim-filename').textContent = interactiveType;
-    vimContent.innerHTML = `<pre>${displayContent}</pre>`;
+    vimContent.textContent = displayContent; // Use textContent instead of innerHTML
     
     // Scroll to selected item
     scrollToSelectedItem();
@@ -493,7 +494,7 @@ function openVimViewer(filename, content) {
     interactiveMode = false;
     vimViewer.classList.remove('hidden');
     document.querySelector('.vim-filename').textContent = filename;
-    vimContent.innerHTML = `<pre>${content}</pre>`;
+    vimContent.textContent = content; // Use textContent for proper wrapping
     vimContent.scrollTop = 0;
     
     // Update help text - add back option if came from list
