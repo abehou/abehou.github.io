@@ -376,14 +376,21 @@ function viewFile(filename) {
     }
 
     // Search in all directories
+    console.log('🔍 Searching in all directories for:', filename);
     for (const [dirName, dirData] of Object.entries(content)) {
-        if (dirData.type === 'directory' && dirData.files && dirData.files[filename]) {
-            const file = dirData.files[filename];
-            const formattedContent = formatFileContent(filename, file);
-            openVimViewer(filename, formattedContent);
-            return;
+        console.log(`  Checking directory: ${dirName}, type: ${dirData.type}`);
+        if (dirData.type === 'directory' && dirData.files) {
+            console.log(`  Files in ${dirName}:`, Object.keys(dirData.files));
+            if (dirData.files[filename]) {
+                console.log(`  ⚠️  FOUND ${filename} in ${dirName} files - opening as file!`);
+                const file = dirData.files[filename];
+                const formattedContent = formatFileContent(filename, file);
+                openVimViewer(filename, formattedContent);
+                return;
+            }
         }
     }
+    console.log('🔍 No file found in any directory');
 
     addOutput(`File not found: ${filename}`, 'error');
 }
