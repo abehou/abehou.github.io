@@ -132,6 +132,11 @@ async function init() {
         return;
     }
     
+    // Make content accessible for debugging
+    window.debugContent = content;
+    console.log('📦 Content loaded successfully! Type "debugContent" in console to inspect.');
+    console.log('📦 Keys:', Object.keys(content));
+    
     clearTerminal();
     displayWelcomeMessage();
     terminalInput.focus();
