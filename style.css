@@ -90,6 +90,28 @@ a:hover {
     line-height: 1.8;
 }
 
+.intro-content {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.profile-photo {
+    flex-shrink: 0;
+}
+
+.profile-photo img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f0f0f0;
+}
+
+.intro-text {
+    flex: 1;
+}
+
 .intro p {
     margin-bottom: 1.2rem;
 }
@@ -191,10 +213,33 @@ a:hover {
 /* Footer */
 footer {
     border-top: 1px solid #e0e0e0;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
     text-align: center;
     color: #888;
     font-size: 0.9rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.social-links a {
+    color: #666;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.social-links a:hover {
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.social-links svg {
+    display: block;
 }
 
 /* Responsive design */
@@ -217,6 +262,17 @@ footer {
     
     nav a {
         font-size: 0.85rem;
+    }
+    
+    .intro-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .profile-photo img {
+        width: 150px;
+        height: 150px;
     }
 }
 
