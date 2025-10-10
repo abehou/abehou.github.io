@@ -1,0 +1,31 @@
+{
+  "type": "directory",
+  "description": "My professional and academic experiences",
+  "files": {
+    "position1.txt": {
+      "title": "Position Title",
+      "organization": "Organization/Company Name",
+      "duration": "Start Date - End Date",
+      "description": "Brief description of your role and responsibilities. What did you work on? What technologies did you use? This is where you'd elaborate on your key achievements and projects."
+    },
+    "position2.txt": {
+      "title": "Previous Position",
+      "organization": "Organization/Company Name",
+      "duration": "Start Date - End Date",
+      "description": "Brief description of your role and responsibilities for this position."
+    },
+    "education1.txt": {
+      "title": "PhD in Computer Science",
+      "organization": "Stanford University",
+      "duration": "2024 - Present",
+      "description": "Working with Diyi Yang on human-AI collaboration, social simulation, and legal AI. Conducting research on natural language processing and machine learning applications."
+    },
+    "education2.txt": {
+      "title": "B.S. Computer Science and Mathematics",
+      "organization": "Johns Hopkins University",
+      "duration": "2020 - 2024",
+      "description": "Worked with Ben Van Durme, Daniel Khashabi, and Tianxing He on NLP research. Relevant coursework included Machine Learning, Natural Language Processing, Advanced Algorithms, and Mathematical Statistics."
+    }
+  }
+}
+

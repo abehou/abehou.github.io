@@ -1,148 +1,9 @@
 // Terminal Emulator for Personal Website
 // Author: Abe Hou
 
-// Content Data Structure
-const content = {
-    main: {
-        type: 'file',
-        content: `
-╔═══════════════════════════════════════════════════════════════╗
-║                          ABE HOU                              ║
-╚═══════════════════════════════════════════════════════════════╝
-
-Hi! I am Abe Hou.
-
-I am a first-year PhD student in Computer Science at Stanford 
-University, working with Diyi Yang.
-https://cs.stanford.edu/~diyiy/index.html
-
-I am interested in human-AI collaboration, social simulation, 
-and legal AI.
-
-I graduated from Johns Hopkins University with a B.S. in Computer 
-Science and Mathematics. I am extremely grateful to have worked 
-with Ben Van Durme, Daniel Khashabi, and Tianxing He.
-───────────────────────────────────────────────────────────────
-CONTACT & SOCIAL
-───────────────────────────────────────────────────────────────
-Twitter: https://twitter.com/abe_hou
-GitHub: https://github.com/abehou
-Email: abehou@stanford.edu
-───────────────────────────────────────────────────────────────
-`
-    },
-    publications: {
-        type: 'directory',
-        description: 'My research publications',
-        files: {
-            '(COLM 2025) Can A Society of Generative Agents Simulate Human Behavior and Inform Public Health Policy? — A Case Study on Vaccine Hesitancy': {
-                title: 'Can A Society of Generative Agents Simulate Human Behavior and Inform Public Health Policy? — A Case Study on Vaccine Hesitancy',
-                authors: '<strong>Abe Bohan Hou</strong>, Hongru Du, Yichen Wang, Jingyu Zhang, Zixiao Wang, Paul Pu Liang, Daniel Khashabi, Lauren Gardner, Tianxing He',
-                venue: 'COLM 2025',
-                links: '[Paper] https://arxiv.org/pdf/2503.09639v4 | [Code] https://github.com/abehou/VacSim',
-                abstract: 'Can we simulate a sandbox society with generative agents to model human behavior, thereby reducing the over-reliance on real human trials for assessing public policies? In this work, we investigate the feasibility of simulating health-related decision-making, using vaccine hesitancy, defined as the delay in acceptance or refusal of vaccines despite the availability of vaccination services (MacDonald, 2015), as a case study. To this end, we introduce the VacSim framework with 100 generative agents powered by Large Language Models (LLMs). VacSim simulates vaccine policy outcomes with the following steps: 1) instantiate a population of agents with demographics based on census data; 2) connect the agents via a social network and model vaccine attitudes as a function of social dynamics and disease-related information; 3) design and evaluate various public health interventions aimed at mitigating vaccine hesitancy. To align with real-world results, we also introduce simulation warmup and attitude modulation to adjust agents’ attitudes. We propose a series of evaluations to assess the reliability of various LLM simulations. Experiments indicate that models like Llama and Qwen can simulate aspects of human behavior but also highlight real-world alignment challenges, such as inconsistent responses with demographic profiles. This early exploration of LLM-driven simulations is not meant to serve as definitive policy guidance; instead, it serves as a call for action to examine LLM-based social simulation for policy development.'            },
-            'paper2.txt': {
-                title: 'Another Paper Title',
-                authors: 'Co-author 1, <strong>Abe Hou</strong>, Co-author 2',
-                venue: 'Conference/Journal Name, Year',
-                links: '[Paper] # | [Code] #',
-                abstract: 'Another research paper abstract goes here. This section would describe the second paper\'s contributions, methodology, and results in detail.'
-            }
-        },
-        summary: `
-╔═══════════════════════════════════════════════════════════════╗
-║                        PUBLICATIONS                           ║
-╚═══════════════════════════════════════════════════════════════╝
-
-Available papers:
-  • paper1.txt - Paper Title Goes Here
-  • paper2.txt - Another Paper Title
-
-Use 'view <filename>' to read a paper in detail.
-For example: view paper1.txt
-`
-    },
-    experiences: {
-        type: 'directory',
-        description: 'My professional and academic experiences',
-        files: {
-            'position1.txt': {
-                title: 'Position Title',
-                organization: 'Organization/Company Name',
-                duration: 'Start Date - End Date',
-                description: 'Brief description of your role and responsibilities. What did you work on? What technologies did you use? This is where you\'d elaborate on your key achievements and projects.'
-            },
-            'position2.txt': {
-                title: 'Previous Position',
-                organization: 'Organization/Company Name',
-                duration: 'Start Date - End Date',
-                description: 'Brief description of your role and responsibilities for this position.'
-            },
-            'education1.txt': {
-                title: 'PhD in Computer Science',
-                organization: 'Stanford University',
-                duration: '2024 - Present',
-                description: 'Working with Diyi Yang on human-AI collaboration, social simulation, and legal AI. Conducting research on natural language processing and machine learning applications.'
-            },
-            'education2.txt': {
-                title: 'B.S. Computer Science and Mathematics',
-                organization: 'Johns Hopkins University',
-                duration: '2020 - 2024',
-                description: 'Worked with Ben Van Durme, Daniel Khashabi, and Tianxing He on NLP research. Relevant coursework included Machine Learning, Natural Language Processing, Advanced Algorithms, and Mathematical Statistics.'
-            }
-        },
-        summary: `
-╔═══════════════════════════════════════════════════════════════╗
-║                         EXPERIENCES                           ║
-╚═══════════════════════════════════════════════════════════════╝
-
-WORK EXPERIENCE:
-  • position1.txt - Position Title
-  • position2.txt - Previous Position
-
-EDUCATION:
-  • education1.txt - PhD in Computer Science (Stanford)
-  • education2.txt - B.S. Computer Science and Mathematics (JHU)
-
-Use 'view <filename>' to read more details.
-For example: view education1.txt
-`
-    },
-    blog: {
-        type: 'directory',
-        description: 'My blog posts and writings',
-        files: {
-            'post1.txt': {
-                title: 'Blog Post Title',
-                date: 'October 10, 2025',
-                content: 'A brief excerpt or summary of your blog post goes here. This gives readers a preview of what the post is about. You can expand this with the full blog post content, discussing research insights, technical tutorials, or personal thoughts about your field.'
-            },
-            'post2.txt': {
-                title: 'Another Blog Post',
-                date: 'September 15, 2025',
-                content: 'Another excerpt describing what this blog post covers. You can write about research, tutorials, thoughts, or anything you\'d like to share. This is your space to explore ideas and share knowledge with the community.'
-            },
-            'post3.txt': {
-                title: 'Getting Started with My Research',
-                date: 'August 1, 2025',
-                content: 'A post about how you got started in your field, lessons learned, or advice for others. Share your journey, the challenges you faced, and what you learned along the way. This kind of content can be invaluable for students and researchers just starting out.'
-            }
-        },
-        summary: `
-╔═══════════════════════════════════════════════════════════════╗
-║                            BLOG                               ║
-╚═══════════════════════════════════════════════════════════════╝
-
-Recent posts:
-  • post1.txt - Blog Post Title (Oct 10, 2025)
-  • post2.txt - Another Blog Post (Sep 15, 2025)
-  • post3.txt - Getting Started with My Research (Aug 1, 2025)
-
-Use 'view <filename>' to read a post.
-For example: view post1.txt
-`
-    }
-};
+// Content Data Structure (loaded from JSON)
+let content = {};
+let dataLoaded = false;
 
 // Terminal State
 let currentDirectory = '~';
@@ -155,8 +16,111 @@ const terminalInput = document.getElementById('terminal-input');
 const vimViewer = document.getElementById('vim-viewer');
 const vimContent = document.getElementById('vim-content');
 
+// Load JSON data
+async function loadData() {
+    try {
+        const dataFiles = ['main', 'publications', 'experiences', 'blog'];
+        const promises = dataFiles.map(file => 
+            fetch(`data/${file}.json`)
+                .then(response => response.json())
+                .then(data => ({ name: file, data }))
+        );
+        
+        const results = await Promise.all(promises);
+        results.forEach(({ name, data }) => {
+            content[name] = data;
+        });
+        
+        // Generate dynamic summaries for directories
+        generateSummaries();
+        
+        dataLoaded = true;
+        return true;
+    } catch (error) {
+        console.error('Error loading data:', error);
+        addOutput('Error loading content data. Please check console.', 'error');
+        return false;
+    }
+}
+
+// Generate dynamic summaries for directory views
+function generateSummaries() {
+    // Generate publications summary
+    if (content.publications && content.publications.files) {
+        let summary = `
+╔═══════════════════════════════════════════════════════════════╗
+║                        PUBLICATIONS                           ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Available papers:
+`;
+        Object.entries(content.publications.files).forEach(([filename, fileData]) => {
+            summary += `  • ${filename} - (${fileData.venue}) ${fileData.title}\n`;
+        });
+        summary += `\nUse 'view <filename>' to read a paper in detail.\nFor example: view ${Object.keys(content.publications.files)[0]}\n`;
+        content.publications.summary = summary;
+    }
+
+    // Generate experiences summary
+    if (content.experiences && content.experiences.files) {
+        let summary = `
+╔═══════════════════════════════════════════════════════════════╗
+║                         EXPERIENCES                           ║
+╚═══════════════════════════════════════════════════════════════╝
+
+`;
+        const files = Object.entries(content.experiences.files);
+        const positions = files.filter(([name]) => name.startsWith('position'));
+        const education = files.filter(([name]) => name.startsWith('education'));
+        
+        if (positions.length > 0) {
+            summary += `WORK EXPERIENCE:\n`;
+            positions.forEach(([filename, fileData]) => {
+                summary += `  • ${filename} - ${fileData.title}\n`;
+            });
+            summary += '\n';
+        }
+        
+        if (education.length > 0) {
+            summary += `EDUCATION:\n`;
+            education.forEach(([filename, fileData]) => {
+                const shortOrg = fileData.organization.split(' ').slice(0, 2).join(' ');
+                summary += `  • ${filename} - ${fileData.title} (${shortOrg})\n`;
+            });
+        }
+        
+        summary += `\nUse 'view <filename>' to read more details.\nFor example: view ${Object.keys(content.experiences.files)[0]}\n`;
+        content.experiences.summary = summary;
+    }
+
+    // Generate blog summary
+    if (content.blog && content.blog.files) {
+        let summary = `
+╔═══════════════════════════════════════════════════════════════╗
+║                            BLOG                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Recent posts:
+`;
+        Object.entries(content.blog.files).forEach(([filename, fileData]) => {
+            summary += `  • ${filename} - ${fileData.title} (${fileData.date})\n`;
+        });
+        summary += `\nUse 'view <filename>' to read a post.\nFor example: view ${Object.keys(content.blog.files)[0]}\n`;
+        content.blog.summary = summary;
+    }
+}
+
 // Initialize Terminal
-function init() {
+async function init() {
+    addOutput('Loading content...', 'info');
+    const loaded = await loadData();
+    
+    if (!loaded) {
+        addOutput('Failed to load content. Please refresh the page.', 'error');
+        return;
+    }
+    
+    clearTerminal();
     displayWelcomeMessage();
     terminalInput.focus();
     
@@ -277,7 +241,7 @@ Examples:
   ls                   # List all available files
   cd publications      # Navigate to publications directory
   view main            # View main page
-  view paper1.txt      # View specific publication
+  view vacsim.txt      # View specific publication
   view publications    # View all publications
 ───────────────────────────────────────────────────────────────
 `;
@@ -528,4 +492,3 @@ function autocomplete() {
 
 // Initialize on load
 document.addEventListener('DOMContentLoaded', init);
-
