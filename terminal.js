@@ -10,6 +10,12 @@ let currentDirectory = '~';
 let commandHistory = [];
 let historyIndex = -1;
 
+// Interactive list state
+let interactiveMode = false;
+let interactiveList = [];
+let selectedIndex = 0;
+let interactiveType = ''; // 'publications', 'experiences', 'blog'
+
 // DOM Elements
 const terminalOutput = document.getElementById('terminal-output');
 const terminalInput = document.getElementById('terminal-input');
@@ -55,7 +61,7 @@ function generateSummaries() {
 Available papers:
 `;
         Object.entries(content.publications.files).forEach(([filename, fileData]) => {
-            summary += `  • ${filename} - (${fileData.venue}) ${fileData.title}\n`;
+            summary += `  • ${filename}\n\n ${fileData.authors}\n`;
         });
         summary += `\nUse 'view <filename>' to read a paper in detail.\nFor example: view ${Object.keys(content.publications.files)[0]}\n`;
         content.publications.summary = summary;
@@ -241,8 +247,16 @@ Examples:
   ls                   # List all available files
   cd publications      # Navigate to publications directory
   view main            # View main page
-  view vacsim.txt      # View specific publication
-  view publications    # View all publications
+  view publications    # Browse publications interactively
+  view experiences     # Browse experiences interactively
+  view blog            # Browse blog posts interactively
+
+Interactive Navigation:
+  When viewing publications/experiences/blog, use:
+    ↑/↓ or j/k         Navigate between items
+    Enter              View selected item
+    b                  Go back to list (from item view)
+    q                  Quit viewer
 ───────────────────────────────────────────────────────────────
 `;
     addOutput(help, 'info');
@@ -320,9 +334,9 @@ function viewFile(filename) {
         return;
     }
 
-    // Check if it's a directory summary
+    // Check if it's a directory summary - open interactive list
     if (content[filename] && content[filename].type === 'directory') {
-        openVimViewer(filename, content[filename].summary);
+        openInteractiveList(filename);
         return;
     }
 
@@ -396,16 +410,112 @@ function formatFileContent(filename, file) {
     return JSON.stringify(file, null, 2);
 }
 
+function openInteractiveList(dirName) {
+    interactiveMode = true;
+    interactiveType = dirName;
+    selectedIndex = 0;
+    
+    // Build list of items
+    interactiveList = Object.entries(content[dirName].files);
+    
+    // Update help text
+    document.querySelector('.vim-help').textContent = 'Use ↑↓ or j/k to navigate, Enter to select, q to quit';
+    
+    // Display the interactive list
+    displayInteractiveList();
+}
+
+function displayInteractiveList() {
+    let displayContent = '';
+    
+    if (interactiveType === 'publications') {
+        displayContent = `╔═══════════════════════════════════════════════════════════════╗\n`;
+        displayContent += `║                        PUBLICATIONS                           ║\n`;
+        displayContent += `╚═══════════════════════════════════════════════════════════════╝\n\n`;
+        displayContent += `Use ↑/↓ or j/k to navigate, Enter to view, q to quit\n\n`;
+        displayContent += `───────────────────────────────────────────────────────────────\n\n`;
+        
+        interactiveList.forEach(([filename, fileData], index) => {
+            const pointer = index === selectedIndex ? '→ ' : '  ';
+            const highlight = index === selectedIndex ? '█ ' : '  ';
+            displayContent += `${pointer}${highlight}${filename}\n\n`;
+            displayContent += `   ${fileData.authors}\n\n`;
+            displayContent += `───────────────────────────────────────────────────────────────\n\n`;
+        });
+    } else if (interactiveType === 'experiences') {
+        displayContent = `╔═══════════════════════════════════════════════════════════════╗\n`;
+        displayContent += `║                         EXPERIENCES                           ║\n`;
+        displayContent += `╚═══════════════════════════════════════════════════════════════╝\n\n`;
+        displayContent += `Use ↑/↓ or j/k to navigate, Enter to view, q to quit\n\n`;
+        displayContent += `───────────────────────────────────────────────────────────────\n\n`;
+        
+        interactiveList.forEach(([filename, fileData], index) => {
+            const pointer = index === selectedIndex ? '→ ' : '  ';
+            displayContent += `${pointer}${fileData.title}\n`;
+            displayContent += `   ${fileData.organization} | ${fileData.duration}\n\n`;
+        });
+    } else if (interactiveType === 'blog') {
+        displayContent = `╔═══════════════════════════════════════════════════════════════╗\n`;
+        displayContent += `║                            BLOG                               ║\n`;
+        displayContent += `╚═══════════════════════════════════════════════════════════════╝\n\n`;
+        displayContent += `Use ↑/↓ or j/k to navigate, Enter to view, q to quit\n\n`;
+        displayContent += `───────────────────────────────────────────────────────────────\n\n`;
+        
+        interactiveList.forEach(([filename, fileData], index) => {
+            const pointer = index === selectedIndex ? '→ ' : '  ';
+            displayContent += `${pointer}${fileData.title}\n`;
+            displayContent += `   ${fileData.date}\n\n`;
+        });
+    }
+    
+    vimViewer.classList.remove('hidden');
+    document.querySelector('.vim-filename').textContent = interactiveType;
+    vimContent.innerHTML = `<pre>${displayContent}</pre>`;
+    
+    // Scroll to selected item
+    scrollToSelectedItem();
+    updateVimStatus();
+}
+
+function scrollToSelectedItem() {
+    // Rough estimate: each item is about 4-5 lines, adjust as needed
+    const itemHeight = interactiveType === 'publications' ? 150 : 80;
+    const targetScroll = selectedIndex * itemHeight;
+    vimContent.scrollTop = targetScroll;
+}
+
 function openVimViewer(filename, content) {
+    const wasInteractive = interactiveMode;
+    const preservedType = interactiveType;
+    const preservedList = [...interactiveList];
+    const preservedIndex = selectedIndex;
+    
+    interactiveMode = false;
     vimViewer.classList.remove('hidden');
     document.querySelector('.vim-filename').textContent = filename;
-    vimContent.textContent = content;
+    vimContent.innerHTML = `<pre>${content}</pre>`;
     vimContent.scrollTop = 0;
+    
+    // Update help text - add back option if came from list
+    if (wasInteractive && preservedList.length > 0) {
+        document.querySelector('.vim-help').textContent = 'Press b to go back, q to quit, ↑↓ or j/k to scroll';
+        // Store the list info so we can go back
+        vimViewer.dataset.fromList = 'true';
+        vimViewer.dataset.listType = preservedType;
+        vimViewer.dataset.listIndex = preservedIndex;
+    } else {
+        document.querySelector('.vim-help').textContent = 'Press q to quit, ↑↓ or j/k to scroll';
+        vimViewer.dataset.fromList = 'false';
+    }
+    
     updateVimStatus();
 }
 
 function closeVimViewer() {
     vimViewer.classList.add('hidden');
+    interactiveMode = false;
+    interactiveList = [];
+    selectedIndex = 0;
     terminalInput.focus();
 }
 
@@ -415,30 +525,75 @@ function handleVimKeypress(e) {
     if (e.key === 'q' || e.key === 'Escape') {
         e.preventDefault();
         closeVimViewer();
-    } else if (e.key === 'j' || e.key === 'ArrowDown') {
+    } else if (e.key === 'b' && vimViewer.dataset.fromList === 'true') {
+        // Go back to the interactive list
         e.preventDefault();
-        vimContent.scrollTop += 40;
-        updateVimStatus();
-    } else if (e.key === 'k' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        vimContent.scrollTop -= 40;
-        updateVimStatus();
-    } else if (e.key === 'g') {
-        e.preventDefault();
-        vimContent.scrollTop = 0;
-        updateVimStatus();
-    } else if (e.key === 'G') {
-        e.preventDefault();
-        vimContent.scrollTop = vimContent.scrollHeight;
-        updateVimStatus();
-    } else if (e.key === 'd') {
-        e.preventDefault();
-        vimContent.scrollTop += vimContent.clientHeight / 2;
-        updateVimStatus();
-    } else if (e.key === 'u') {
-        e.preventDefault();
-        vimContent.scrollTop -= vimContent.clientHeight / 2;
-        updateVimStatus();
+        const listType = vimViewer.dataset.listType;
+        const listIndex = parseInt(vimViewer.dataset.listIndex) || 0;
+        
+        interactiveMode = true;
+        interactiveType = listType;
+        selectedIndex = listIndex;
+        interactiveList = Object.entries(content[listType].files);
+        
+        document.querySelector('.vim-help').textContent = 'Use ↑↓ or j/k to navigate, Enter to select, q to quit';
+        displayInteractiveList();
+    } else if (interactiveMode) {
+        // Interactive list navigation
+        if (e.key === 'j' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (selectedIndex < interactiveList.length - 1) {
+                selectedIndex++;
+                displayInteractiveList();
+            }
+        } else if (e.key === 'k' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (selectedIndex > 0) {
+                selectedIndex--;
+                displayInteractiveList();
+            }
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            // Open the selected item
+            const [filename, fileData] = interactiveList[selectedIndex];
+            const formattedContent = formatFileContent(filename, fileData);
+            openVimViewer(filename, formattedContent);
+        } else if (e.key === 'g') {
+            e.preventDefault();
+            selectedIndex = 0;
+            displayInteractiveList();
+        } else if (e.key === 'G') {
+            e.preventDefault();
+            selectedIndex = interactiveList.length - 1;
+            displayInteractiveList();
+        }
+    } else {
+        // Regular vim-style scrolling
+        if (e.key === 'j' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            vimContent.scrollTop += 40;
+            updateVimStatus();
+        } else if (e.key === 'k' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            vimContent.scrollTop -= 40;
+            updateVimStatus();
+        } else if (e.key === 'g') {
+            e.preventDefault();
+            vimContent.scrollTop = 0;
+            updateVimStatus();
+        } else if (e.key === 'G') {
+            e.preventDefault();
+            vimContent.scrollTop = vimContent.scrollHeight;
+            updateVimStatus();
+        } else if (e.key === 'd') {
+            e.preventDefault();
+            vimContent.scrollTop += vimContent.clientHeight / 2;
+            updateVimStatus();
+        } else if (e.key === 'u') {
+            e.preventDefault();
+            vimContent.scrollTop -= vimContent.clientHeight / 2;
+            updateVimStatus();
+        }
     }
 }
 
