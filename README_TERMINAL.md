@@ -36,21 +36,29 @@ view main
 # Navigate to publications directory
 cd publications
 
-# List files in publications
-ls
-
-# View a specific publication
-view paper1.txt
-
-# View all publications summary
+# Browse publications interactively
 view publications
+
+# Browse experiences interactively
+view experiences
+
+# Browse blog posts interactively
+view blog
 
 # Go back to home directory
 cd ~
-
-# View experiences without changing directory
-view experiences
 ```
+
+## Interactive Browsing
+
+When you run `view publications`, `view experiences`, or `view blog`, you enter an **interactive browsing mode**:
+
+1. **Navigate**: Use ↑/↓ arrow keys or `j`/`k` to move between items
+2. **Select**: Press `Enter` to view the selected item in detail
+3. **Go Back**: Press `b` to return to the list from an item
+4. **Quit**: Press `q` to exit and return to terminal
+
+This makes it easy to browse through your publications without typing long paper names!
 
 ## Vim Viewer Shortcuts
 
@@ -59,12 +67,14 @@ When viewing a file, use these keyboard shortcuts:
 | Key | Action |
 |-----|--------|
 | `q` or `Esc` | Quit viewer and return to terminal |
-| `j` or `↓` | Scroll down |
-| `k` or `↑` | Scroll up |
+| `b` | Go back to list (if viewing from interactive mode) |
+| `j` or `↓` | Scroll down (or navigate to next item in list) |
+| `k` or `↑` | Scroll up (or navigate to previous item in list) |
+| `Enter` | Select item (in interactive list mode) |
 | `d` | Scroll down half page |
 | `u` | Scroll up half page |
-| `g` | Go to top |
-| `G` | Go to bottom |
+| `g` | Go to top (or first item in list) |
+| `G` | Go to bottom (or last item in list) |
 
 ## File Structure
 
