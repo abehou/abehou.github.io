@@ -35,13 +35,12 @@ Email: abehou@stanford.edu
         type: 'directory',
         description: 'My research publications',
         files: {
-            'paper1.txt': {
-                title: 'Paper Title Goes Here',
-                authors: '<strong>Abe Hou</strong>, Co-author 1, Co-author 2',
-                venue: 'Conference/Journal Name, Year',
-                links: '[Paper] # | [Code] # | [Project Page] #',
-                abstract: 'This is where the abstract or detailed description of the paper would go. It provides an overview of the research problem, methodology, key findings, and contributions of the work.'
-            },
+            '(COLM 2025) Can A Society of Generative Agents Simulate Human Behavior and Inform Public Health Policy? — A Case Study on Vaccine Hesitancy': {
+                title: 'Can A Society of Generative Agents Simulate Human Behavior and Inform Public Health Policy? — A Case Study on Vaccine Hesitancy',
+                authors: '<strong>Abe Bohan Hou</strong>, Hongru Du, Yichen Wang, Jingyu Zhang, Zixiao Wang, Paul Pu Liang, Daniel Khashabi, Lauren Gardner, Tianxing He',
+                venue: 'COLM 2025',
+                links: '[Paper] https://arxiv.org/pdf/2503.09639v4 | [Code] https://github.com/abehou/VacSim',
+                abstract: 'Can we simulate a sandbox society with generative agents to model human behavior, thereby reducing the over-reliance on real human trials for assessing public policies? In this work, we investigate the feasibility of simulating health-related decision-making, using vaccine hesitancy, defined as the delay in acceptance or refusal of vaccines despite the availability of vaccination services (MacDonald, 2015), as a case study. To this end, we introduce the VacSim framework with 100 generative agents powered by Large Language Models (LLMs). VacSim simulates vaccine policy outcomes with the following steps: 1) instantiate a population of agents with demographics based on census data; 2) connect the agents via a social network and model vaccine attitudes as a function of social dynamics and disease-related information; 3) design and evaluate various public health interventions aimed at mitigating vaccine hesitancy. To align with real-world results, we also introduce simulation warmup and attitude modulation to adjust agents’ attitudes. We propose a series of evaluations to assess the reliability of various LLM simulations. Experiments indicate that models like Llama and Qwen can simulate aspects of human behavior but also highlight real-world alignment challenges, such as inconsistent responses with demographic profiles. This early exploration of LLM-driven simulations is not meant to serve as definitive policy guidance; instead, it serves as a call for action to examine LLM-based social simulation for policy development.'            },
             'paper2.txt': {
                 title: 'Another Paper Title',
                 authors: 'Co-author 1, <strong>Abe Hou</strong>, Co-author 2',
