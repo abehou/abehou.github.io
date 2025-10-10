@@ -1,5 +1,8 @@
 // Terminal Emulator for Personal Website
 // Author: Abe Hou
+// Version: DEBUG-2024-v3
+
+console.log('🔧 Terminal.js loaded - Version: DEBUG-2024-v3');
 
 // Content Data Structure (loaded from JSON)
 let content = {};
@@ -338,14 +341,21 @@ function viewFile(filename) {
     }
 
     // Check if it's a directory summary - open interactive list
-    console.log('Checking directory for:', filename);
-    console.log('Content exists:', !!content[filename]);
-    console.log('Is directory:', content[filename]?.type === 'directory');
+    console.log('=== DEBUG viewFile ===');
+    console.log('Requested filename:', filename);
+    console.log('Content keys:', Object.keys(content));
+    console.log('Content[filename] exists:', !!content[filename]);
+    if (content[filename]) {
+        console.log('Content[filename].type:', content[filename].type);
+    }
     
     if (content[filename] && content[filename].type === 'directory') {
-        console.log('Opening interactive list for:', filename);
+        console.log('✓ Opening interactive list for:', filename);
+        addOutput(`Opening interactive browser for ${filename}...`, 'info');
         openInteractiveList(filename);
         return;
+    } else {
+        console.log('✗ NOT opening interactive list. Continuing search...');
     }
 
     // Check in current directory if we're in one
@@ -419,18 +429,23 @@ function formatFileContent(filename, file) {
 }
 
 function openInteractiveList(dirName) {
+    console.log('>>> openInteractiveList called with:', dirName);
+    console.log('>>> Files in directory:', Object.keys(content[dirName].files));
+    
     interactiveMode = true;
     interactiveType = dirName;
     selectedIndex = 0;
     
     // Build list of items
     interactiveList = Object.entries(content[dirName].files);
+    console.log('>>> Interactive list length:', interactiveList.length);
     
     // Update help text
     document.querySelector('.vim-help').textContent = 'Use ↑↓ or j/k to navigate, Enter to select, q to quit';
     
     // Display the interactive list
     displayInteractiveList();
+    console.log('>>> Interactive list displayed');
 }
 
 function displayInteractiveList() {
