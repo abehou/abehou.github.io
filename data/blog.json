@@ -3,19 +3,9 @@
   "description": "My blog posts and writings",
   "files": {
     "post1.txt": {
-      "title": "Blog Post Title",
-      "date": "October 10, 2025",
-      "content": "A brief excerpt or summary of your blog post goes here. This gives readers a preview of what the post is about. You can expand this with the full blog post content, discussing research insights, technical tutorials, or personal thoughts about your field."
-    },
-    "post2.txt": {
-      "title": "Another Blog Post",
-      "date": "September 15, 2025",
-      "content": "Another excerpt describing what this blog post covers. You can write about research, tutorials, thoughts, or anything you'd like to share. This is your space to explore ideas and share knowledge with the community."
-    },
-    "post3.txt": {
-      "title": "Getting Started with My Research",
-      "date": "August 1, 2025",
-      "content": "A post about how you got started in your field, lessons learned, or advice for others. Share your journey, the challenges you faced, and what you learned along the way. This kind of content can be invaluable for students and researchers just starting out."
+      "title": "Welcome to my website!",
+      "date": "October 12, 2025",
+      "content": "This website is built by collaborating with AI coding tools, as an experiment. I hope you enjoy it! I promise I will upload more blog posts in the future."    
     }
   }
 }

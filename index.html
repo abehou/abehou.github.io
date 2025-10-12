@@ -3,20 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abe Hou - Terminal</title>
+    <title>Abe Hou</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="stf_logo_white.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="stf_logo_white.png">
     <link rel="stylesheet" href="terminal.css">
 </head>
 <body>
-    <!-- View Toggle Controls -->
-    <div class="view-controls">
-        <button id="theme-toggle" class="control-btn" title="Toggle Light/Dark Mode">
-            <span class="icon">☀️</span>
-        </button>
-        <button id="view-toggle" class="control-btn" title="Toggle Terminal/Plain View">
-            <span class="icon">📄</span>
-        </button>
-    </div>
-
     <!-- Terminal View -->
     <div class="terminal-container" id="terminal-view">
         <div class="terminal-header">
@@ -26,6 +18,17 @@
                 <span class="btn maximize"></span>
             </div>
             <div class="terminal-title">abehou@stanford: ~/personal_web</div>
+            <!-- View Toggle Controls for Terminal -->
+            <div class="view-controls terminal-controls">
+                <button id="theme-toggle-terminal" class="control-btn" title="Toggle Light/Dark Mode">
+                    <span class="icon">☀️</span>
+                    <span class="label">Light</span>
+                </button>
+                <button id="view-toggle-terminal" class="control-btn" title="Toggle Terminal/Plain View">
+                    <span class="icon">📄</span>
+                    <span class="label">Web</span>
+                </button>
+            </div>
         </div>
         <div class="terminal-body">
             <div id="terminal-output"></div>
@@ -40,7 +43,20 @@
     <div class="plain-view" id="plain-view">
         <div class="plain-container">
             <header class="plain-header">
-                <h1 class="name">Abe Hou</h1>
+                <div class="header-top">
+                    <h1 class="name">Abe Hou</h1>
+                    <!-- View Toggle Controls -->
+                    <div class="view-controls">
+                        <button id="theme-toggle" class="control-btn" title="Toggle Light/Dark Mode">
+                            <span class="icon">☀️</span>
+                            <span class="label">Light</span>
+                        </button>
+                        <button id="view-toggle" class="control-btn" title="Toggle Terminal/Plain View">
+                            <span class="icon">📄</span>
+                            <span class="label">Web</span>
+                        </button>
+                    </div>
+                </div>
                 <nav class="plain-nav">
                     <a href="#" data-page="main" class="nav-link active">Home</a>
                     <a href="#" data-page="publications" class="nav-link">Publications</a>

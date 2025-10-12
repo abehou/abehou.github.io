@@ -47,7 +47,12 @@ function initializeView() {
     }
     if (currentTheme === 'light') {
         document.body.classList.add('light-mode');
-        document.getElementById('theme-toggle').querySelector('.icon').textContent = '🌙';
+        const themeBtn = document.getElementById('theme-toggle');
+        themeBtn.querySelector('.icon').textContent = '🌙';
+        themeBtn.querySelector('.label').textContent = 'Dark';
+        const themeBtnTerminal = document.getElementById('theme-toggle-terminal');
+        themeBtnTerminal.querySelector('.icon').textContent = '🌙';
+        themeBtnTerminal.querySelector('.label').textContent = 'Dark';
     }
     
     // Set view - default to plain on mobile unless user has saved preference
@@ -71,8 +76,27 @@ function toggleTheme() {
     currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
     document.body.classList.toggle('light-mode');
     
-    const themeIcon = document.getElementById('theme-toggle').querySelector('.icon');
-    themeIcon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+    // Update plain view button
+    const themeBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeBtn.querySelector('.icon');
+    const themeLabel = themeBtn.querySelector('.label');
+    
+    // Update terminal view button
+    const themeBtnTerminal = document.getElementById('theme-toggle-terminal');
+    const themeIconTerminal = themeBtnTerminal.querySelector('.icon');
+    const themeLabelTerminal = themeBtnTerminal.querySelector('.label');
+    
+    if (currentTheme === 'dark') {
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = 'Light';
+        themeIconTerminal.textContent = '☀️';
+        themeLabelTerminal.textContent = 'Light';
+    } else {
+        themeIcon.textContent = '🌙';
+        themeLabel.textContent = 'Dark';
+        themeIconTerminal.textContent = '🌙';
+        themeLabelTerminal.textContent = 'Dark';
+    }
     
     localStorage.setItem('preferredTheme', currentTheme);
 }
@@ -92,8 +116,27 @@ function toggleView() {
 }
 
 function updateViewToggleIcon() {
-    const viewIcon = document.getElementById('view-toggle').querySelector('.icon');
-    viewIcon.textContent = currentView === 'terminal' ? '📄' : '💻';
+    // Update plain view button
+    const viewBtn = document.getElementById('view-toggle');
+    const viewIcon = viewBtn.querySelector('.icon');
+    const viewLabel = viewBtn.querySelector('.label');
+    
+    // Update terminal view button
+    const viewBtnTerminal = document.getElementById('view-toggle-terminal');
+    const viewIconTerminal = viewBtnTerminal.querySelector('.icon');
+    const viewLabelTerminal = viewBtnTerminal.querySelector('.label');
+    
+    if (currentView === 'terminal') {
+        viewIcon.textContent = '📄';
+        viewLabel.textContent = 'Web';
+        viewIconTerminal.textContent = '📄';
+        viewLabelTerminal.textContent = 'Web';
+    } else {
+        viewIcon.textContent = '💻';
+        viewLabel.textContent = 'Terminal';
+        viewIconTerminal.textContent = '💻';
+        viewLabelTerminal.textContent = 'Terminal';
+    }
 }
 
 function switchToPlainView() {
@@ -240,9 +283,14 @@ function renderPlainMain() {
     let html = '<div class="main-content">';
     
     for (const line of lines) {
-        if (line.includes('===')) continue; // Skip separator lines
+        // Skip all separator lines (===, ---, ╔, ╚, ║, etc.)
+        if (line.includes('═') || line.includes('─') || 
+            line.includes('╔') || line.includes('╚') || line.includes('║')) {
+            continue;
+        }
+        
         if (line.trim().startsWith('ABE HOU')) {
-            html += `<h2>${line.trim()}</h2>`;
+            continue;
         } else if (line.includes('CONTACT & SOCIAL')) {
             html += '<h3>Contact & Social</h3>';
         } else if (line.includes('http')) {
@@ -357,9 +405,11 @@ async function init() {
         }
     }
     
-    // Event listeners for toggles
+    // Event listeners for toggles (both terminal and plain view buttons)
     document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
     document.getElementById('view-toggle').addEventListener('click', toggleView);
+    document.getElementById('theme-toggle-terminal').addEventListener('click', toggleTheme);
+    document.getElementById('view-toggle-terminal').addEventListener('click', toggleView);
     
     // Terminal event listeners
     if (terminalInput) {
@@ -514,7 +564,7 @@ function listFiles(dir) {
         // List root directory
         const output = `
 Available files and directories:
-  <span class="file">main</span>              About me and introduction
+  <span class="file">main</span>            About me and introduction
   <span class="directory">publications/</span>    My research publications
   <span class="directory">experiences/</span>     Professional and academic experience
   <span class="directory">blog/</span>            Blog posts and writings

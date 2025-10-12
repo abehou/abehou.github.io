@@ -1,4 +1,4 @@
-/* Root Variables */
+/* Root Variables - Dark Mode */
 :root {
     --bg-primary: #1e1e2e;
     --bg-secondary: #2d2d44;
@@ -8,18 +8,50 @@
     --text-secondary: #abb2bf;
     --border-color: #3a3a3a;
     --header-bg: #2d2d2d;
+    
+    /* Terminal colors - dark mode */
+    --terminal-green: #00ff00;
+    --terminal-blue: #61afef;
+    --terminal-red: #ff6b6b;
+    --terminal-yellow: #e5c07b;
+    --terminal-cyan: #56b6c2;
+    --terminal-magenta: #c678dd;
+    --terminal-text: #abb2bf;
+    
+    /* Web view colors - dark mode */
+    --web-text: #e6edf3;
+    --web-text-secondary: #9198a1;
+    --web-link: #58a6ff;
+    --web-link-hover: #79c0ff;
+    --web-heading: #ffffff;
 }
 
-/* Light Mode Variables */
+/* Light Mode Variables - VSCode Light Theme inspired */
 body.light-mode {
-    --bg-primary: #f5f5f5;
+    --bg-primary: #f3f3f3;
     --bg-secondary: #e8e8e8;
     --bg-terminal: #ffffff;
-    --bg-terminal-body: #fafafa;
-    --text-primary: #2d2d2d;
-    --text-secondary: #555555;
-    --border-color: #d0d0d0;
-    --header-bg: #e0e0e0;
+    --bg-terminal-body: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: #6a737d;
+    --border-color: #e1e4e8;
+    --header-bg: #f6f8fa;
+    
+    /* Terminal-specific light mode colors (VSCode-like) */
+    --terminal-green: #008000;
+    --terminal-blue: #0000ff;
+    --terminal-red: #cd3131;
+    --terminal-yellow: #795e26;
+    --terminal-cyan: #007acc;
+    --terminal-magenta: #af00db;
+    --terminal-text: #333333;
+    
+    /* Web view colors - separate from terminal */
+    --web-text: #24292e;
+    --web-text-secondary: #586069;
+    --web-link: #0366d6;
+    --web-link-hover: #005cc5;
+    --web-heading: #1a1a1a;
 }
 
 /* Base Styles */
@@ -42,38 +74,57 @@ body {
     transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* View Controls */
+/* View Controls - iOS Style */
 .view-controls {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 2000;
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 .control-btn {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 2px solid var(--border-color);
-    background: var(--bg-terminal);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: none;
+    background: rgba(120, 120, 128, 0.16);
+    backdrop-filter: blur(20px);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--terminal-cyan);
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .control-btn {
+    background: rgba(120, 120, 128, 0.12);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .control-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background: rgba(120, 120, 128, 0.24);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .control-btn:hover {
+    background: rgba(120, 120, 128, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+    background: rgba(120, 120, 128, 0.3);
 }
 
 .control-btn .icon {
-    filter: grayscale(0);
+    font-size: 13px;
+    display: flex;
+    align-items: center;
 }
 
 /* Terminal Container */
@@ -100,6 +151,7 @@ body {
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--border-color);
+    position: relative;
 }
 
 .terminal-buttons {
@@ -134,6 +186,10 @@ body {
     text-align: center;
 }
 
+.terminal-controls {
+    margin-left: auto;
+}
+
 /* Terminal Body */
 .terminal-body {
     flex: 1;
@@ -155,36 +211,44 @@ body {
 }
 
 .output-line.command {
-    color: #00ff00;
+    color: var(--terminal-green);
 }
 
 .output-line.error {
-    color: #ff6b6b;
+    color: var(--terminal-red);
 }
 
 .output-line.info {
-    color: #61afef;
+    color: var(--terminal-blue);
 }
 
 .output-line.success {
     color: #98c379;
 }
 
+body.light-mode .output-line.success {
+    color: var(--terminal-green);
+}
+
 .output-line.warning {
-    color: #e5c07b;
+    color: var(--terminal-yellow);
 }
 
 .directory {
-    color: #61afef;
+    color: var(--terminal-blue);
     font-weight: bold;
 }
 
 .file {
-    color: #abb2bf;
+    color: var(--terminal-text);
 }
 
 .executable {
     color: #98c379;
+}
+
+body.light-mode .executable {
+    color: var(--terminal-cyan);
 }
 
 /* Input Line */
@@ -199,15 +263,24 @@ body {
     flex-shrink: 0;
 }
 
+body.light-mode .prompt {
+    color: var(--terminal-cyan);
+}
+
 #terminal-input {
     flex: 1;
     background: transparent;
     border: none;
     outline: none;
-    color: #00ff00;
+    color: var(--terminal-green);
     font-family: inherit;
     font-size: inherit;
-    caret-color: #00ff00;
+    caret-color: var(--terminal-green);
+}
+
+body.light-mode #terminal-input {
+    color: var(--terminal-text);
+    caret-color: var(--terminal-text);
 }
 
 /* Vim Viewer */
@@ -224,6 +297,11 @@ body {
     color: #d4d4d4;
 }
 
+body.light-mode .vim-viewer {
+    background: #ffffff;
+    color: #333333;
+}
+
 .vim-viewer.hidden {
     display: none;
 }
@@ -237,14 +315,27 @@ body {
     border-bottom: 1px solid #3a3a3a;
 }
 
+body.light-mode .vim-header {
+    background: #f6f8fa;
+    border-bottom: 1px solid #e1e4e8;
+}
+
 .vim-filename {
     color: #61afef;
     font-weight: bold;
 }
 
+body.light-mode .vim-filename {
+    color: #007acc;
+}
+
 .vim-help {
     color: #888;
     font-size: 12px;
+}
+
+body.light-mode .vim-help {
+    color: #6a737d;
 }
 
 .vim-content {
@@ -256,6 +347,11 @@ body {
     white-space: pre-wrap;
     word-wrap: break-word;
     word-break: break-word;
+}
+
+body.light-mode .vim-content {
+    background: #ffffff;
+    color: #333333;
 }
 
 .vim-content pre {
@@ -273,6 +369,12 @@ body {
     font-size: 12px;
     color: #888;
     border-top: 1px solid #3a3a3a;
+}
+
+body.light-mode .vim-footer {
+    background: #f6f8fa;
+    color: #6a737d;
+    border-top: 1px solid #e1e4e8;
 }
 
 /* Content Styling in Vim Viewer */
@@ -342,24 +444,46 @@ a:hover {
 
 /* Scrollbar styling */
 .terminal-body::-webkit-scrollbar,
-.vim-content::-webkit-scrollbar {
+.vim-content::-webkit-scrollbar,
+.plain-view::-webkit-scrollbar {
     width: 8px;
 }
 
 .terminal-body::-webkit-scrollbar-track,
-.vim-content::-webkit-scrollbar-track {
+.vim-content::-webkit-scrollbar-track,
+.plain-view::-webkit-scrollbar-track {
     background: #1a1a1a;
 }
 
+body.light-mode .terminal-body::-webkit-scrollbar-track,
+body.light-mode .vim-content::-webkit-scrollbar-track,
+body.light-mode .plain-view::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
 .terminal-body::-webkit-scrollbar-thumb,
-.vim-content::-webkit-scrollbar-thumb {
+.vim-content::-webkit-scrollbar-thumb,
+.plain-view::-webkit-scrollbar-thumb {
     background: #444;
     border-radius: 4px;
 }
 
+body.light-mode .terminal-body::-webkit-scrollbar-thumb,
+body.light-mode .vim-content::-webkit-scrollbar-thumb,
+body.light-mode .plain-view::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+}
+
 .terminal-body::-webkit-scrollbar-thumb:hover,
-.vim-content::-webkit-scrollbar-thumb:hover {
+.vim-content::-webkit-scrollbar-thumb:hover,
+.plain-view::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+body.light-mode .terminal-body::-webkit-scrollbar-thumb:hover,
+body.light-mode .vim-content::-webkit-scrollbar-thumb:hover,
+body.light-mode .plain-view::-webkit-scrollbar-thumb:hover {
+    background: #a0a0a0;
 }
 
 /* Animations */
@@ -398,10 +522,17 @@ a:hover {
         display: none;
     }
     
-    .control-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
+    .terminal-title {
+        font-size: 11px;
+    }
+    
+    .terminal-controls .control-btn {
+        padding: 4px 10px;
+        font-size: 10px;
+    }
+    
+    .terminal-controls .control-btn .icon {
+        font-size: 11px;
     }
 }
 
@@ -426,20 +557,29 @@ a:hover {
     margin: 0 auto;
     padding: 40px 20px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    color: var(--web-text);
 }
 
 /* Plain Header */
 .plain-header {
     margin-bottom: 3rem;
-    border-bottom: 2px solid var(--border-color);
     padding-bottom: 1.5rem;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    gap: 2rem;
+    flex-wrap: wrap;
 }
 
 .plain-header .name {
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 1rem;
+    color: var(--web-heading);
+    margin: 0;
     letter-spacing: -0.02em;
 }
 
@@ -451,7 +591,7 @@ a:hover {
 
 .nav-link {
     text-decoration: none;
-    color: var(--text-secondary);
+    color: var(--web-text-secondary);
     font-size: 1rem;
     font-weight: 500;
     transition: color 0.2s ease;
@@ -460,68 +600,70 @@ a:hover {
 }
 
 .nav-link:hover {
-    color: var(--text-primary);
+    color: var(--web-link);
 }
 
 .nav-link.active {
-    color: var(--text-primary);
-    border-bottom-color: var(--text-primary);
+    color: var(--web-link);
+    border-bottom-color: var(--web-link);
 }
 
 /* Plain Content */
 .plain-content {
     margin-bottom: 3rem;
-    color: var(--text-secondary);
+    color: var(--web-text);
 }
 
 .plain-content h2 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    color: var(--text-primary);
+    color: var(--web-heading);
 }
 
 .plain-content h3 {
     font-size: 1.3rem;
     margin-bottom: 0.8rem;
     margin-top: 2rem;
-    color: var(--text-primary);
+    color: var(--web-heading);
 }
 
 .plain-content p {
     line-height: 1.7;
     margin-bottom: 1rem;
+    color: var(--web-text);
 }
 
 .plain-content a {
-    color: #61afef;
+    color: var(--web-link);
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .plain-content a:hover {
+    color: var(--web-link-hover);
     text-decoration: underline;
 }
 
 /* Publication/Experience Items */
 .item {
     margin-bottom: 2.5rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
 }
 
 .item:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
 }
 
 .item-title {
     font-size: 1.2rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--web-heading);
     margin-bottom: 0.5rem;
 }
 
 .item-meta {
     font-size: 0.95rem;
-    color: var(--text-secondary);
+    color: var(--web-text-secondary);
     margin-bottom: 0.5rem;
 }
 
@@ -536,10 +678,10 @@ a:hover {
 
 /* Plain Footer */
 .plain-footer {
-    border-top: 2px solid var(--border-color);
     padding-top: 2rem;
+    margin-top: 3rem;
     text-align: center;
-    color: var(--text-secondary);
+    color: var(--web-text-secondary);
 }
 
 .plain-footer .social-links {
@@ -550,13 +692,13 @@ a:hover {
 }
 
 .plain-footer .social-links a {
-    color: var(--text-secondary);
+    color: var(--web-text-secondary);
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .plain-footer .social-links a:hover {
-    color: var(--text-primary);
+    color: var(--web-link);
 }
 
 /* Mobile Responsive for Plain View */
@@ -565,8 +707,28 @@ a:hover {
         padding: 20px 15px;
     }
     
+    .header-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    
     .plain-header .name {
         font-size: 2rem;
+    }
+    
+    .view-controls {
+        gap: 8px;
+    }
+    
+    .control-btn {
+        padding: 5px 12px;
+        font-size: 11px;
+    }
+    
+    .control-btn .icon {
+        font-size: 12px;
     }
     
     .plain-nav {

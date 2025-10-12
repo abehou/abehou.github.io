@@ -2,29 +2,59 @@
   "type": "directory",
   "description": "My professional and academic experiences",
   "files": {
-    "position1.txt": {
-      "title": "Position Title",
-      "organization": "Organization/Company Name",
-      "duration": "Start Date - End Date",
-      "description": "Brief description of your role and responsibilities. What did you work on? What technologies did you use? This is where you'd elaborate on your key achievements and projects."
-    },
-    "position2.txt": {
-      "title": "Previous Position",
-      "organization": "Organization/Company Name",
-      "duration": "Start Date - End Date",
-      "description": "Brief description of your role and responsibilities for this position."
-    },
     "education1.txt": {
       "title": "PhD in Computer Science",
       "organization": "Stanford University",
-      "duration": "2024 - Present",
-      "description": "Working with Diyi Yang on human-AI collaboration, social simulation, and legal AI. Conducting research on natural language processing and machine learning applications."
+      "duration": "2025 - Present",
+      "description": "Currently working with Professor Diyi Yang"
     },
     "education2.txt": {
       "title": "B.S. Computer Science and Mathematics",
       "organization": "Johns Hopkins University",
-      "duration": "2020 - 2024",
-      "description": "Worked with Ben Van Durme, Daniel Khashabi, and Tianxing He on NLP research. Relevant coursework included Machine Learning, Natural Language Processing, Advanced Algorithms, and Mathematical Statistics."
+      "duration": "2021 - 2025",
+      "description": "Mainly worked with Professors Ben Van Durme, Daniel Khashabi, and Tianxing He (now Assistant Professor at Tsinghua University)"
+    },
+    "activity1.txt": {
+      "title": "Club Co-Founder & President",
+      "organization": "Technology and Policy Society at Johns Hopkins University",
+      "duration": "July 2022 - May 2025",
+      "description": "Organized 5+ AI policy seminars and hosted the inaugural AI policy hackathon in Washington, D.C. with $25K from OpenAI and Microsoft."    
+    },
+    "activity2.txt": {
+      "title": "Director of Programming",
+      "organization": "Johns Hopkins Undergraduate Law Review",
+      "duration": "Sep 2021 - Sep 2024",
+      "description": "Organized AI & Law and interdisplinary law seminars and edited a few law review articles."    
+    },
+    "position1.txt": {
+      "title": "Research Intern",
+      "organization": "JHU CSSE (System Engineering)",
+      "duration": "Sep 2024 - May 2025",
+      "description": "Worked with Professor Lauren Gardner and Hongru Du on vaccine hesitancy simulation."    
+    },
+    "position2.txt": {
+      "title": "Research Intern",
+      "organization": "JHU CLSP",
+      "duration": "May 2023 - May 2025",
+      "description": "Worked with Professor Ben Van Durme on legal case retrieval and retrieval-augmented generation."
+    },
+    "position3.txt": {
+      "title": "Research Intern",
+      "organization": "University of Washington",
+      "duration": "Feb 2023 - Sep 2023",
+      "description": "Worked with Professor Yulia Tsvetkov and Tianxing He on semantic watermarking for LLMs."
+    },
+    "position4.txt": {
+      "title": "Software Engineering Intern",
+      "organization": "Qualytics",
+      "duration": "May 2022 - Aug 2022",
+      "description": "Worked on integrating data pipelines for Qualytics' software with OpenMetadata."    
+    },
+    "position5.txt": {
+      "title": "Legal Intern",
+      "organization": "Tianyuan Law Firm",
+      "duration": "May 2021 - Aug 2021",
+      "description": "Conducted legal research on data protection laws and served clients for IPO filings and pre-IPO compliance."    
     }
   }
 }

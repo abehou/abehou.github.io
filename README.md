@@ -1,134 +1,165 @@
-# Personal Website - Setup Guide
+# Terminal-Style Personal Website
 
-A simple, clean personal website with a minimalist design.
+A unique personal website (developed by Abe Hou: abehou.com) with a terminal emulator interface and vim-style file viewer.
 
-## Quick Start
+Please give credit if you plan to use my template!
 
-### 1. Add Your Profile Photo
+## Features
 
-Place your photo file named **`profile.jpg`** in this directory:
+- **Terminal Interface**: Navigate your website using familiar terminal commands
+- **Vim-Style Viewer**: View files in a vim-inspired reader with keyboard shortcuts
+- **Directory Structure**: Organized content in directories (main, publications, experiences, blog)
+- **Command History**: Use arrow keys to navigate through command history
+- **Tab Completion**: Press Tab to autocomplete commands and filenames
 
-```
-personal_web/
-├── index.html
-├── publications.html
-├── experiences.html
-├── blog.html
-├── style.css
-└── profile.jpg  ← Add your photo here
-```
+## Available Commands
 
-**Photo requirements:**
-- Square image (recommended: 400×400px or larger)
-- Format: JPG or PNG
-- Name it `profile.jpg` (or update line 25 in `index.html` if using a different name)
+| Command | Description | Example |
+|---------|-------------|---------|
+| `ls` | List files and directories | `ls`, `ls publications` |
+| `cd <dir>` | Change directory | `cd publications` |
+| `view <file>` | Open file in vim viewer | `view main`, `view paper1.txt` |
+| `cat <file>` | Alias for view | `cat main` |
+| `pwd` | Print working directory | `pwd` |
+| `clear` | Clear terminal screen | `clear` |
+| `help` | Show help message | `help` |
+| `whoami` | Display current user | `whoami` |
+| `date` | Show current date/time | `date` |
 
-### 2. Update Social Media Links
+## Navigation Examples
 
-The footer includes Twitter and GitHub icons. Update these in **all four HTML files**:
+```bash
+# List all available files
+ls
 
-**Quick method** - Use find and replace:
-- Find: `https://twitter.com/yourusername`
-- Replace with: `https://twitter.com/your_actual_username`
+# View the main page
+view main
 
-- Find: `https://github.com/yourusername`
-- Replace with: `https://github.com/your_actual_username`
+# Navigate to publications directory
+cd publications
 
-**Manual method** - In each file (`index.html`, `publications.html`, `experiences.html`, `blog.html`), update the footer section:
-```html
-<a href="https://twitter.com/your_username" ...>
-<a href="https://github.com/your_username" ...>
-```
+# Browse publications interactively
+view publications
 
-### 3. Customize Your Content
+# Browse experiences interactively
+view experiences
 
-- **index.html** - Your introduction (already has your info!)
-- **publications.html** - Add your research papers
-- **experiences.html** - Add work experience and education
-- **blog.html** - Add blog posts
+# Browse blog posts interactively
+view blog
 
-## Publishing to GitHub Pages
-
-1. **Create a repository** named `yourusername.github.io` on GitHub
-
-2. **Push your code:**
-   ```bash
-   cd /nlp/u/abehou/personal_web
-   git init
-   git add .
-   git commit -m "Initial commit: Personal website"
-   git branch -M main
-   git remote add origin https://github.com/yourusername/yourusername.github.io.git
-   git push -u origin main
-   ```
-
-3. **Enable GitHub Pages:**
-   - Go to repository Settings → Pages
-   - Source: Deploy from branch "main", folder "/ (root)"
-   - Save
-
-4. **Your site will be live** at `https://yourusername.github.io` in a few minutes!
-
-## Customization
-
-### Profile Photo Styling
-
-Edit `style.css` lines 103-109 to change size:
-```css
-.profile-photo img {
-    width: 180px;        /* Desktop size */
-    height: 180px;
-    border-radius: 50%;  /* Makes it circular */
-    object-fit: cover;
-    border: 3px solid #f0f0f0;
-}
+# Go back to home directory
+cd ~
 ```
 
-### Colors and Fonts
+## Interactive Browsing
 
-All styling is in `style.css`. Key variables:
-- Main text: `#333`
-- Links: `#0066cc`
-- Light gray: `#888`
-- Borders: `#e0e0e0`
+When you run `view publications`, `view experiences`, or `view blog`, you enter an **interactive browsing mode**:
 
-### Adding More Social Links
+1. **Navigate**: Use ↑/↓ arrow keys or `j`/`k` to move between items
+2. **Select**: Press `Enter` to view the selected item in detail
+3. **Go Back**: Press `b` to return to the list from an item
+4. **Quit**: Press `q` to exit and return to terminal
 
-To add more social icons (LinkedIn, Google Scholar, etc.), copy the existing icon pattern in the footer and find SVG icons from sources like [Simple Icons](https://simpleicons.org/).
+This makes it easy to browse through your publications without typing long paper names!
+
+## Vim Viewer Shortcuts
+
+When viewing a file, use these keyboard shortcuts:
+
+| Key | Action |
+|-----|--------|
+| `q` or `Esc` | Quit viewer and return to terminal |
+| `b` | Go back to list (if viewing from interactive mode) |
+| `j` or `↓` | Scroll down (or navigate to next item in list) |
+| `k` or `↑` | Scroll up (or navigate to previous item in list) |
+| `Enter` | Select item (in interactive list mode) |
+| `d` | Scroll down half page |
+| `u` | Scroll up half page |
+| `g` | Go to top (or first item in list) |
+| `G` | Go to bottom (or last item in list) |
 
 ## File Structure
 
 ```
-.
-├── index.html          # Home page with intro
-├── publications.html   # Publications page
-├── experiences.html    # Experience page
-├── blog.html          # Blog page
-├── style.css          # All styling
-└── README.md          # This file
+~/personal_web/
+├── main              # About me
+├── publications/     # Research publications
+│   ├── paper1.txt
+│   └── paper2.txt
+├── experiences/      # Work and education
+│   ├── position1.txt
+│   ├── position2.txt
+│   ├── education1.txt
+│   └── education2.txt
+└── blog/            # Blog posts
+    ├── post1.txt
+    ├── post2.txt
+    └── post3.txt
 ```
 
-## Features
+## Customization
 
-- ✨ Clean, minimalist design
-- 📱 Fully responsive (mobile & desktop)
-- 🚀 No dependencies - pure HTML/CSS
-- 🎨 Easy to customize
-- ⚡ Fast loading
+### Adding New Publications
 
-## Preview Locally
+Edit `terminal.js` and add entries to the `content.publications.files` object:
 
-Simply open `index.html` in your web browser to preview the site!
+```javascript
+'paper3.txt': {
+    title: 'Your Paper Title',
+    authors: '<strong>Your Name</strong>, Co-authors',
+    venue: 'Conference/Journal Name, Year',
+    links: '[Paper] URL | [Code] URL',
+    abstract: 'Paper abstract...'
+}
+```
+
+### Adding New Experiences
+
+Edit `terminal.js` and add entries to the `content.experiences.files` object:
+
+```javascript
+'position3.txt': {
+    title: 'New Position',
+    organization: 'Company Name',
+    duration: 'Start - End',
+    description: 'Description of role...'
+}
+```
+
+### Styling
+
+- Modify `terminal.css` to change colors, fonts, and layout
+- Terminal uses monospace fonts for authentic terminal feel
+- Vim viewer uses a dark theme by default
+
+## Running Locally
+
+1. Open `index.html` in a web browser
+2. Or use a local server:
+   ```bash
+   python3 -m http.server 8000
+   # Visit http://localhost:8000
+   ```
+
+## Browser Compatibility
+
+- Works on all modern browsers (Chrome, Firefox, Safari, Edge)
+- Mobile responsive design included
+- Best experience on desktop with physical keyboard
 
 ## Tips
 
-- Keep the design focused on content
-- Update regularly with new work
-- Test on mobile devices
-- Consider adding Google Analytics for visitor tracking
-- Use optimized images for faster loading
+- Use Tab for command/filename autocompletion
+- Use ↑/↓ arrow keys to navigate command history
+- Terminal input stays focused - just start typing
+- Press `q` to quickly exit the vim viewer
 
----
+## Backup Files
 
-© 2025 - Feel free to use this template!
+Original HTML files are backed up as:
+- `publications.html.bak`
+- `experiences.html.bak`
+- `blog.html.bak`
+
+You can restore these if needed.
 
