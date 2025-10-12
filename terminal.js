@@ -132,11 +132,6 @@ async function init() {
         return;
     }
     
-    // Make content accessible for debugging
-    window.debugContent = content;
-    console.log('📦 Content loaded successfully! Type "debugContent" in console to inspect.');
-    console.log('📦 Keys:', Object.keys(content));
-    
     clearTerminal();
     displayWelcomeMessage();
     terminalInput.focus();
@@ -461,9 +456,15 @@ function openInteractiveList(dirName) {
 }
 
 function displayInteractiveList() {
+    console.log('🎨 displayInteractiveList called');
+    console.log('  interactiveType:', interactiveType);
+    console.log('  interactiveList length:', interactiveList.length);
+    console.log('  selectedIndex:', selectedIndex);
+    
     let displayContent = '';
     
     if (interactiveType === 'publications') {
+        console.log('  Building publications display...');
         displayContent = `═══════════════════════════════════════════════════════════════\n`;
         displayContent += `                        PUBLICATIONS                           \n`;
         displayContent += `═══════════════════════════════════════════════════════════════\n\n`;
@@ -471,6 +472,7 @@ function displayInteractiveList() {
         displayContent += `───────────────────────────────────────────────────────────────\n\n`;
         
         interactiveList.forEach(([filename, fileData], index) => {
+            console.log(`    Item ${index}: ${filename}`);
             const pointer = index === selectedIndex ? '→ ' : '  ';
             const highlight = index === selectedIndex ? '█ ' : '  ';
             displayContent += `${pointer}${highlight}${filename}\n\n`;
@@ -503,14 +505,22 @@ function displayInteractiveList() {
         });
     }
     
+    console.log('📺 Setting vim viewer content...');
+    console.log('  displayContent length:', displayContent.length);
+    console.log('  First 200 chars:', displayContent.substring(0, 200));
+    
     vimViewer.classList.remove('hidden');
     vimViewer.dataset.fromList = 'false'; // Reset the flag
     document.querySelector('.vim-filename').textContent = interactiveType;
     vimContent.textContent = displayContent; // Use textContent instead of innerHTML
     
+    console.log('📺 Content set. vimContent.textContent length:', vimContent.textContent.length);
+    
     // Scroll to selected item
     scrollToSelectedItem();
     updateVimStatus();
+    
+    console.log('✅ displayInteractiveList COMPLETE');
 }
 
 function scrollToSelectedItem() {
@@ -558,6 +568,8 @@ function closeVimViewer() {
 function handleVimKeypress(e) {
     if (vimViewer.classList.contains('hidden')) return;
 
+    console.log('⌨️  Key pressed in vim viewer:', e.key, 'interactiveMode:', interactiveMode);
+
     if (e.key === 'q' || e.key === 'Escape') {
         e.preventDefault();
         closeVimViewer();
@@ -590,6 +602,7 @@ function handleVimKeypress(e) {
             }
         } else if (e.key === 'Enter') {
             e.preventDefault();
+            console.log('⏎ Enter pressed in interactive mode - opening item', selectedIndex);
             // Open the selected item
             const [filename, fileData] = interactiveList[selectedIndex];
             const formattedContent = formatFileContent(filename, fileData);
