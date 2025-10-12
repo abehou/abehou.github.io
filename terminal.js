@@ -424,6 +424,9 @@ function openInteractiveList(dirName) {
     // Update help text
     document.querySelector('.vim-help').textContent = 'Use ↑↓ or j/k to navigate, Enter to select, q to quit';
     
+    // Remove focus from terminal input so vim viewer can receive keypresses
+    terminalInput.blur();
+    
     // Display the interactive list
     displayInteractiveList();
 }
@@ -495,6 +498,10 @@ function openVimViewer(filename, content) {
     const preservedIndex = selectedIndex;
     
     interactiveMode = false;
+    
+    // Remove focus from terminal input so vim viewer can receive keypresses
+    terminalInput.blur();
+    
     vimViewer.classList.remove('hidden');
     document.querySelector('.vim-filename').textContent = filename;
     vimContent.textContent = content; // Use textContent for proper wrapping
