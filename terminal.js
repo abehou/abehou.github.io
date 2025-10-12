@@ -513,6 +513,9 @@ function displayInteractiveList() {
         });
     }
     
+    console.log('🔷 After if/else chain, about to enter try block');
+    console.log('🔷 displayContent length so far:', displayContent.length);
+    
     try {
         console.log('📺 Setting vim viewer content...');
         console.log('  displayContent length:', displayContent.length);
