@@ -326,6 +326,10 @@ function changeDirectory(dir) {
 }
 
 function viewFile(filename) {
+    console.log('\n\n🚀 ==== viewFile CALLED ====');
+    console.log('  filename:', filename);
+    console.trace('Call stack for viewFile:');
+    
     if (!filename) {
         addOutput('Usage: view <filename>', 'error');
         return;
@@ -353,6 +357,7 @@ function viewFile(filename) {
         console.log('✓ Opening interactive list for:', filename);
         addOutput(`Opening interactive browser for ${filename}...`, 'info');
         openInteractiveList(filename);
+        console.log('✅ openInteractiveList completed, returning from viewFile');
         return;
     } else {
         console.log('✗ NOT opening interactive list. Continuing search...');
