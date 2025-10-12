@@ -451,8 +451,11 @@ function openInteractiveList(dirName) {
     document.querySelector('.vim-help').textContent = 'Use ↑↓ or j/k to navigate, Enter to select, q to quit';
     
     // Display the interactive list
+    console.log('>>> About to call displayInteractiveList...');
     displayInteractiveList();
-    console.log('>>> Interactive list displayed');
+    console.log('>>> Returned from displayInteractiveList');
+    console.log('>>> interactiveMode is now:', interactiveMode);
+    console.log('>>> vimViewer hidden?', vimViewer.classList.contains('hidden'));
 }
 
 function displayInteractiveList() {
@@ -536,6 +539,10 @@ function scrollToSelectedItem() {
 }
 
 function openVimViewer(filename, content) {
+    console.log('🖼️  openVimViewer called with filename:', filename);
+    console.log('  wasInteractive:', interactiveMode);
+    console.trace('Call stack:');
+    
     const wasInteractive = interactiveMode;
     const preservedType = interactiveType;
     const preservedList = [...interactiveList];
