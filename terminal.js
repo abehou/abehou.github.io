@@ -1,8 +1,5 @@
 // Terminal Emulator for Personal Website
 // Author: Abe Hou
-// Version: DEBUG-2024-v3
-
-console.log('🔧 Terminal.js loaded - Version: DEBUG-2024-v3');
 
 // Content Data Structure (loaded from JSON)
 let content = {};
@@ -38,13 +35,10 @@ async function loadData() {
         const results = await Promise.all(promises);
         results.forEach(({ name, data }) => {
             content[name] = data;
-            console.log(`Loaded ${name}:`, data);
         });
         
         // Generate dynamic summaries for directories
         generateSummaries();
-        
-        console.log('Final content structure:', content);
         
         dataLoaded = true;
         return true;
@@ -163,6 +157,9 @@ Type 'help' for available commands, or 'ls' to list files.
 
 function handleInput(e) {
     if (e.key === 'Enter') {
+        e.preventDefault(); // Prevent the Enter key from bubbling up
+        e.stopPropagation(); // Stop event propagation
+        
         const command = terminalInput.value.trim();
         if (command) {
             addOutput(`abehou@stanford:${currentDirectory}$ ${command}`, 'command');
@@ -326,10 +323,6 @@ function changeDirectory(dir) {
 }
 
 function viewFile(filename) {
-    console.log('\n\n🚀 ==== viewFile CALLED ====');
-    console.log('  filename:', filename);
-    console.trace('Call stack for viewFile:');
-    
     if (!filename) {
         addOutput('Usage: view <filename>', 'error');
         return;
@@ -345,22 +338,9 @@ function viewFile(filename) {
     }
 
     // Check if it's a directory summary - open interactive list
-    console.log('=== DEBUG viewFile ===');
-    console.log('Requested filename:', filename);
-    console.log('Content keys:', Object.keys(content));
-    console.log('Content[filename] exists:', !!content[filename]);
-    if (content[filename]) {
-        console.log('Content[filename].type:', content[filename].type);
-    }
-    
     if (content[filename] && content[filename].type === 'directory') {
-        console.log('✓ Opening interactive list for:', filename);
-        addOutput(`Opening interactive browser for ${filename}...`, 'info');
         openInteractiveList(filename);
-        console.log('✅ openInteractiveList completed, returning from viewFile');
         return;
-    } else {
-        console.log('✗ NOT opening interactive list. Continuing search...');
     }
 
     // Check in current directory if we're in one
@@ -376,21 +356,14 @@ function viewFile(filename) {
     }
 
     // Search in all directories
-    console.log('🔍 Searching in all directories for:', filename);
     for (const [dirName, dirData] of Object.entries(content)) {
-        console.log(`  Checking directory: ${dirName}, type: ${dirData.type}`);
-        if (dirData.type === 'directory' && dirData.files) {
-            console.log(`  Files in ${dirName}:`, Object.keys(dirData.files));
-            if (dirData.files[filename]) {
-                console.log(`  ⚠️  FOUND ${filename} in ${dirName} files - opening as file!`);
-                const file = dirData.files[filename];
-                const formattedContent = formatFileContent(filename, file);
-                openVimViewer(filename, formattedContent);
-                return;
-            }
+        if (dirData.type === 'directory' && dirData.files && dirData.files[filename]) {
+            const file = dirData.files[filename];
+            const formattedContent = formatFileContent(filename, file);
+            openVimViewer(filename, formattedContent);
+            return;
         }
     }
-    console.log('🔍 No file found in any directory');
 
     addOutput(`File not found: ${filename}`, 'error');
 }
@@ -441,38 +414,24 @@ function formatFileContent(filename, file) {
 }
 
 function openInteractiveList(dirName) {
-    console.log('>>> openInteractiveList called with:', dirName);
-    console.log('>>> Files in directory:', Object.keys(content[dirName].files));
-    
     interactiveMode = true;
     interactiveType = dirName;
     selectedIndex = 0;
     
     // Build list of items
     interactiveList = Object.entries(content[dirName].files);
-    console.log('>>> Interactive list length:', interactiveList.length);
     
     // Update help text
     document.querySelector('.vim-help').textContent = 'Use ↑↓ or j/k to navigate, Enter to select, q to quit';
     
     // Display the interactive list
-    console.log('>>> About to call displayInteractiveList...');
     displayInteractiveList();
-    console.log('>>> Returned from displayInteractiveList');
-    console.log('>>> interactiveMode is now:', interactiveMode);
-    console.log('>>> vimViewer hidden?', vimViewer.classList.contains('hidden'));
 }
 
 function displayInteractiveList() {
-    console.log('🎨 displayInteractiveList called');
-    console.log('  interactiveType:', interactiveType);
-    console.log('  interactiveList length:', interactiveList.length);
-    console.log('  selectedIndex:', selectedIndex);
-    
     let displayContent = '';
     
     if (interactiveType === 'publications') {
-        console.log('  Building publications display...');
         displayContent = `═══════════════════════════════════════════════════════════════\n`;
         displayContent += `                        PUBLICATIONS                           \n`;
         displayContent += `═══════════════════════════════════════════════════════════════\n\n`;
@@ -480,7 +439,6 @@ function displayInteractiveList() {
         displayContent += `───────────────────────────────────────────────────────────────\n\n`;
         
         interactiveList.forEach(([filename, fileData], index) => {
-            console.log(`    Item ${index}: ${filename}`);
             const pointer = index === selectedIndex ? '→ ' : '  ';
             const highlight = index === selectedIndex ? '█ ' : '  ';
             displayContent += `${pointer}${highlight}${filename}\n\n`;
@@ -513,30 +471,14 @@ function displayInteractiveList() {
         });
     }
     
-    console.log('🔷 After if/else chain, about to enter try block');
-    console.log('🔷 displayContent length so far:', displayContent.length);
+    vimViewer.classList.remove('hidden');
+    vimViewer.dataset.fromList = 'false'; // Reset the flag
+    document.querySelector('.vim-filename').textContent = interactiveType;
+    vimContent.textContent = displayContent;
     
-    try {
-        console.log('📺 Setting vim viewer content...');
-        console.log('  displayContent length:', displayContent.length);
-        console.log('  First 200 chars:', displayContent.substring(0, 200));
-        
-        vimViewer.classList.remove('hidden');
-        vimViewer.dataset.fromList = 'false'; // Reset the flag
-        document.querySelector('.vim-filename').textContent = interactiveType;
-        vimContent.textContent = displayContent; // Use textContent instead of innerHTML
-        
-        console.log('📺 Content set. vimContent.textContent length:', vimContent.textContent.length);
-        
-        // Scroll to selected item
-        scrollToSelectedItem();
-        updateVimStatus();
-        
-        console.log('✅ displayInteractiveList COMPLETE');
-    } catch (error) {
-        console.error('❌ ERROR in displayInteractiveList:', error);
-        console.error('Error stack:', error.stack);
-    }
+    // Scroll to selected item
+    scrollToSelectedItem();
+    updateVimStatus();
 }
 
 function scrollToSelectedItem() {
@@ -547,10 +489,6 @@ function scrollToSelectedItem() {
 }
 
 function openVimViewer(filename, content) {
-    console.log('🖼️  openVimViewer called with filename:', filename);
-    console.log('  wasInteractive:', interactiveMode);
-    console.trace('Call stack:');
-    
     const wasInteractive = interactiveMode;
     const preservedType = interactiveType;
     const preservedList = [...interactiveList];
@@ -588,8 +526,6 @@ function closeVimViewer() {
 function handleVimKeypress(e) {
     if (vimViewer.classList.contains('hidden')) return;
 
-    console.log('⌨️  Key pressed in vim viewer:', e.key, 'interactiveMode:', interactiveMode);
-
     if (e.key === 'q' || e.key === 'Escape') {
         e.preventDefault();
         closeVimViewer();
@@ -622,7 +558,6 @@ function handleVimKeypress(e) {
             }
         } else if (e.key === 'Enter') {
             e.preventDefault();
-            console.log('⏎ Enter pressed in interactive mode - opening item', selectedIndex);
             // Open the selected item
             const [filename, fileData] = interactiveList[selectedIndex];
             const formattedContent = formatFileContent(filename, fileData);
