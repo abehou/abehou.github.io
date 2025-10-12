@@ -1,4 +1,28 @@
-/* Terminal Theme - Dark Mode */
+/* Root Variables */
+:root {
+    --bg-primary: #1e1e2e;
+    --bg-secondary: #2d2d44;
+    --bg-terminal: #1a1a1a;
+    --bg-terminal-body: #0a0a0a;
+    --text-primary: #00ff00;
+    --text-secondary: #abb2bf;
+    --border-color: #3a3a3a;
+    --header-bg: #2d2d2d;
+}
+
+/* Light Mode Variables */
+body.light-mode {
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #e8e8e8;
+    --bg-terminal: #ffffff;
+    --bg-terminal-body: #fafafa;
+    --text-primary: #2d2d2d;
+    --text-secondary: #555555;
+    --border-color: #d0d0d0;
+    --header-bg: #e0e0e0;
+}
+
+/* Base Styles */
 * {
     margin: 0;
     padding: 0;
@@ -7,14 +31,49 @@
 
 body {
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
-    background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
-    color: #00ff00;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
     overflow: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* View Controls */
+.view-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000;
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    background: var(--bg-terminal);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.control-btn .icon {
+    filter: grayscale(0);
 }
 
 /* Terminal Container */
@@ -22,21 +81,25 @@ body {
     width: 100%;
     max-width: 1200px;
     height: 90vh;
-    background: #1a1a1a;
+    background: var(--bg-terminal);
     border-radius: 8px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
+.terminal-container.hidden {
+    display: none;
+}
+
 /* Terminal Header */
 .terminal-header {
-    background: #2d2d2d;
+    background: var(--header-bg);
     padding: 10px 15px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #3a3a3a;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .terminal-buttons {
@@ -76,7 +139,7 @@ body {
     flex: 1;
     padding: 20px;
     overflow-y: auto;
-    background: #0a0a0a;
+    background: var(--bg-terminal-body);
     font-size: 14px;
     line-height: 1.6;
 }
@@ -333,6 +396,185 @@ a:hover {
 
     .vim-help {
         display: none;
+    }
+    
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+/* ============================================
+   PLAIN VIEW STYLES
+   ============================================ */
+
+.plain-view {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--bg-terminal-body);
+}
+
+.plain-view.active {
+    display: block;
+}
+
+.plain-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+/* Plain Header */
+.plain-header {
+    margin-bottom: 3rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1.5rem;
+}
+
+.plain-header .name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.plain-nav {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link:hover {
+    color: var(--text-primary);
+}
+
+.nav-link.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--text-primary);
+}
+
+/* Plain Content */
+.plain-content {
+    margin-bottom: 3rem;
+    color: var(--text-secondary);
+}
+
+.plain-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.plain-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    margin-top: 2rem;
+    color: var(--text-primary);
+}
+
+.plain-content p {
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.plain-content a {
+    color: #61afef;
+    text-decoration: none;
+}
+
+.plain-content a:hover {
+    text-decoration: underline;
+}
+
+/* Publication/Experience Items */
+.item {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.item-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.item-meta {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.item-links {
+    margin-top: 0.8rem;
+}
+
+.item-links a {
+    margin-right: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Plain Footer */
+.plain-footer {
+    border-top: 2px solid var(--border-color);
+    padding-top: 2rem;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.plain-footer .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.plain-footer .social-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.plain-footer .social-links a:hover {
+    color: var(--text-primary);
+}
+
+/* Mobile Responsive for Plain View */
+@media (max-width: 768px) {
+    .plain-container {
+        padding: 20px 15px;
+    }
+    
+    .plain-header .name {
+        font-size: 2rem;
+    }
+    
+    .plain-nav {
+        gap: 1rem;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
     }
 }
 

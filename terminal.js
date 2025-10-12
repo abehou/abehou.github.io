@@ -16,11 +16,102 @@ let interactiveList = [];
 let selectedIndex = 0;
 let interactiveType = ''; // 'publications', 'experiences', 'blog'
 
+// View State
+let currentView = 'terminal'; // 'terminal' or 'plain'
+let currentTheme = 'dark'; // 'dark' or 'light'
+let currentPlainPage = 'main'; // current page in plain view
+
 // DOM Elements
 const terminalOutput = document.getElementById('terminal-output');
 const terminalInput = document.getElementById('terminal-input');
 const vimViewer = document.getElementById('vim-viewer');
 const vimContent = document.getElementById('vim-content');
+const terminalView = document.getElementById('terminal-view');
+const plainView = document.getElementById('plain-view');
+const plainContent = document.getElementById('plain-content');
+
+// Detect mobile device
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+}
+
+// Initialize view based on device and localStorage
+function initializeView() {
+    // Load preferences from localStorage
+    const savedView = localStorage.getItem('preferredView');
+    const savedTheme = localStorage.getItem('preferredTheme');
+    
+    // Set theme
+    if (savedTheme) {
+        currentTheme = savedTheme;
+    }
+    if (currentTheme === 'light') {
+        document.body.classList.add('light-mode');
+        document.getElementById('theme-toggle').querySelector('.icon').textContent = '🌙';
+    }
+    
+    // Set view - default to plain on mobile unless user has saved preference
+    if (savedView) {
+        currentView = savedView;
+    } else if (isMobile()) {
+        currentView = 'plain';
+    }
+    
+    // Apply view
+    if (currentView === 'plain') {
+        switchToPlainView();
+    }
+    
+    // Update toggle icon
+    updateViewToggleIcon();
+}
+
+// Toggle theme
+function toggleTheme() {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.body.classList.toggle('light-mode');
+    
+    const themeIcon = document.getElementById('theme-toggle').querySelector('.icon');
+    themeIcon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+    
+    localStorage.setItem('preferredTheme', currentTheme);
+}
+
+// Toggle view
+function toggleView() {
+    currentView = currentView === 'terminal' ? 'plain' : 'terminal';
+    
+    if (currentView === 'plain') {
+        switchToPlainView();
+    } else {
+        switchToTerminalView();
+    }
+    
+    localStorage.setItem('preferredView', currentView);
+    updateViewToggleIcon();
+}
+
+function updateViewToggleIcon() {
+    const viewIcon = document.getElementById('view-toggle').querySelector('.icon');
+    viewIcon.textContent = currentView === 'terminal' ? '📄' : '💻';
+}
+
+function switchToPlainView() {
+    terminalView.classList.add('hidden');
+    plainView.classList.add('active');
+    if (vimViewer) {
+        vimViewer.classList.add('hidden');
+    }
+    loadPlainPage(currentPlainPage);
+}
+
+function switchToTerminalView() {
+    terminalView.classList.remove('hidden');
+    plainView.classList.remove('active');
+    if (terminalInput) {
+        terminalInput.focus();
+    }
+}
 
 // Load JSON data
 async function loadData() {
@@ -116,28 +207,181 @@ Recent posts:
     }
 }
 
+// Plain View Page Loader
+function loadPlainPage(page) {
+    currentPlainPage = page;
+    
+    // Update active nav link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.page === page) {
+            link.classList.add('active');
+        }
+    });
+    
+    // Render content
+    if (page === 'main') {
+        renderPlainMain();
+    } else if (page === 'publications') {
+        renderPlainPublications();
+    } else if (page === 'experiences') {
+        renderPlainExperiences();
+    } else if (page === 'blog') {
+        renderPlainBlog();
+    }
+}
+
+function renderPlainMain() {
+    const mainData = content.main;
+    if (!mainData) return;
+    
+    // Convert terminal content to HTML
+    const lines = mainData.content.split('\n');
+    let html = '<div class="main-content">';
+    
+    for (const line of lines) {
+        if (line.includes('===')) continue; // Skip separator lines
+        if (line.trim().startsWith('ABE HOU')) {
+            html += `<h2>${line.trim()}</h2>`;
+        } else if (line.includes('CONTACT & SOCIAL')) {
+            html += '<h3>Contact & Social</h3>';
+        } else if (line.includes('http')) {
+            // Convert URLs to links
+            const urlMatch = line.match(/(https?:\/\/[^\s]+)/);
+            if (urlMatch) {
+                const url = urlMatch[1];
+                const label = line.split(':')[0].trim() || 'Link';
+                html += `<p><strong>${label}:</strong> <a href="${url}" target="_blank">${url}</a></p>`;
+            }
+        } else if (line.trim()) {
+            html += `<p>${line.trim()}</p>`;
+        }
+    }
+    
+    html += '</div>';
+    plainContent.innerHTML = html;
+}
+
+function renderPlainPublications() {
+    const pubs = content.publications;
+    if (!pubs || !pubs.files) return;
+    
+    let html = '<h2>Publications</h2>';
+    
+    Object.entries(pubs.files).forEach(([filename, pub]) => {
+        html += `
+            <div class="item">
+                <div class="item-title">${pub.title}</div>
+                <div class="item-meta">${pub.authors.replace(/<strong>/g, '<strong>').replace(/<\/strong>/g, '</strong>')}</div>
+                <div class="item-meta"><em>${pub.venue}</em></div>
+                <div class="item-meta">${pub.abstract}</div>
+                <div class="item-links">
+                    ${pub.links.split('|').map(link => {
+                        const match = link.trim().match(/\[(.*?)\]\s*(.*)/);
+                        if (match) {
+                            const [, text, url] = match;
+                            return url.trim() === '#' ? `<span style="color: #888;">[${text}]</span>` : `<a href="${url.trim()}" target="_blank">[${text}]</a>`;
+                        }
+                        return '';
+                    }).join(' ')}
+                </div>
+            </div>
+        `;
+    });
+    
+    plainContent.innerHTML = html;
+}
+
+function renderPlainExperiences() {
+    const exps = content.experiences;
+    if (!exps || !exps.files) return;
+    
+    let html = '<h2>Experience</h2>';
+    
+    Object.entries(exps.files).forEach(([filename, exp]) => {
+        html += `
+            <div class="item">
+                <div class="item-title">${exp.title}</div>
+                <div class="item-meta"><strong>${exp.organization}</strong> | ${exp.duration}</div>
+                <div class="item-meta">${exp.description}</div>
+            </div>
+        `;
+    });
+    
+    plainContent.innerHTML = html;
+}
+
+function renderPlainBlog() {
+    const blog = content.blog;
+    if (!blog || !blog.files) return;
+    
+    let html = '<h2>Blog</h2>';
+    
+    Object.entries(blog.files).forEach(([filename, post]) => {
+        html += `
+            <div class="item">
+                <div class="item-title">${post.title}</div>
+                <div class="item-meta">${post.date}</div>
+                <div class="item-meta">${post.content}</div>
+            </div>
+        `;
+    });
+    
+    plainContent.innerHTML = html;
+}
+
 // Initialize Terminal
 async function init() {
-    addOutput('Loading content...', 'info');
+    // Load data first
+    if (terminalOutput) {
+        addOutput('Loading content...', 'info');
+    }
     const loaded = await loadData();
     
     if (!loaded) {
-        addOutput('Failed to load content. Please refresh the page.', 'error');
+        if (terminalOutput) {
+            addOutput('Failed to load content. Please refresh the page.', 'error');
+        }
         return;
     }
     
-    clearTerminal();
-    displayWelcomeMessage();
-    terminalInput.focus();
+    // Initialize view (must be after data is loaded)
+    initializeView();
     
-    // Event listeners
-    terminalInput.addEventListener('keydown', handleInput);
+    // Terminal-specific initialization
+    if (terminalOutput) {
+        clearTerminal();
+        displayWelcomeMessage();
+        if (currentView === 'terminal') {
+            terminalInput.focus();
+        }
+    }
+    
+    // Event listeners for toggles
+    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+    document.getElementById('view-toggle').addEventListener('click', toggleView);
+    
+    // Terminal event listeners
+    if (terminalInput) {
+        terminalInput.addEventListener('keydown', handleInput);
+    }
     document.addEventListener('keydown', handleVimKeypress);
     
-    // Keep terminal input focused
+    // Plain view nav listeners
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            loadPlainPage(link.dataset.page);
+        });
+    });
+    
+    // Keep terminal input focused when in terminal view
     document.addEventListener('click', () => {
+        if (currentView !== 'terminal') return;
         if (!vimViewer.classList.contains('hidden')) return;
-        terminalInput.focus();
+        if (terminalInput) {
+            terminalInput.focus();
+        }
     });
 }
 

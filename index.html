@@ -7,7 +7,18 @@
     <link rel="stylesheet" href="terminal.css">
 </head>
 <body>
-    <div class="terminal-container">
+    <!-- View Toggle Controls -->
+    <div class="view-controls">
+        <button id="theme-toggle" class="control-btn" title="Toggle Light/Dark Mode">
+            <span class="icon">☀️</span>
+        </button>
+        <button id="view-toggle" class="control-btn" title="Toggle Terminal/Plain View">
+            <span class="icon">📄</span>
+        </button>
+    </div>
+
+    <!-- Terminal View -->
+    <div class="terminal-container" id="terminal-view">
         <div class="terminal-header">
             <div class="terminal-buttons">
                 <span class="btn close"></span>
@@ -22,6 +33,31 @@
                 <span class="prompt">abehou@stanford:~/personal_web$ </span>
                 <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" autofocus>
             </div>
+        </div>
+    </div>
+
+    <!-- Plain View -->
+    <div class="plain-view" id="plain-view">
+        <div class="plain-container">
+            <header class="plain-header">
+                <h1 class="name">Abe Hou</h1>
+                <nav class="plain-nav">
+                    <a href="#" data-page="main" class="nav-link active">Home</a>
+                    <a href="#" data-page="publications" class="nav-link">Publications</a>
+                    <a href="#" data-page="experiences" class="nav-link">Experience</a>
+                    <a href="#" data-page="blog" class="nav-link">Blog</a>
+                </nav>
+            </header>
+            <main class="plain-content" id="plain-content">
+                <!-- Content will be dynamically loaded here -->
+            </main>
+            <footer class="plain-footer">
+                <div class="social-links">
+                    <a href="https://twitter.com/abe_hou" target="_blank" aria-label="Twitter">Twitter</a>
+                    <a href="https://github.com/abehou" target="_blank" aria-label="GitHub">GitHub</a>
+                </div>
+                <p>© 2025 Abe Hou</p>
+            </footer>
         </div>
     </div>
 
