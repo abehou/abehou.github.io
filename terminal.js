@@ -19,7 +19,7 @@ let interactiveType = ''; // 'publications', 'experiences', 'blog'
 // View State
 let currentView = 'terminal'; // 'terminal' or 'plain'
 let currentTheme = 'dark'; // 'dark' or 'light'
-let currentPlainPage = 'main'; // current page in plain view
+let currentPlainPage = 'me'; // current page in plain view
 
 // DOM Elements
 const terminalOutput = document.getElementById('terminal-output');
@@ -159,7 +159,7 @@ function switchToTerminalView() {
 // Load JSON data
 async function loadData() {
     try {
-        const dataFiles = ['main', 'publications', 'experiences', 'blog'];
+        const dataFiles = ['me', 'publications', 'experiences', 'blog'];
         const promises = dataFiles.map(file => 
             fetch(`data/${file}.json`)
                 .then(response => response.json())
@@ -263,7 +263,7 @@ function loadPlainPage(page) {
     });
     
     // Render content
-    if (page === 'main') {
+    if (page === 'me') {
         renderPlainMain();
     } else if (page === 'publications') {
         renderPlainPublications();
@@ -275,11 +275,11 @@ function loadPlainPage(page) {
 }
 
 function renderPlainMain() {
-    const mainData = content.main;
-    if (!mainData) return;
+    const meData = content.me;
+    if (!meData) return;
     
     // Convert terminal content to HTML
-    const lines = mainData.content.split('\n');
+    const lines = meData.content.split('\n');
     let html = '<div class="main-content">';
     
     for (const line of lines) {
@@ -543,7 +543,7 @@ Available commands:
 Examples:
   ls                   # List all available files
   cd publications      # Navigate to publications directory
-  view main            # View main page
+  view me              # View main page
   view publications    # Browse publications interactively
   view experiences     # Browse experiences interactively
   view blog            # Browse blog posts interactively
@@ -564,12 +564,14 @@ function listFiles(dir) {
         // List root directory
         const output = `
 Available files and directories:
-  <span class="file">main</span>            About me and introduction
+  <span class="file">me</span>               About me and introduction
   <span class="directory">publications/</span>    My research publications
   <span class="directory">experiences/</span>     Professional and academic experience
   <span class="directory">blog/</span>            Blog posts and writings
 
 Type 'view <filename>' to open a file, or 'cd <directory>' to navigate.
+
+Examples: 'view me' shows my introduction and contact information; 'view publications' shows my research publications.
 `;
         addOutput(output, 'info');
     } else {
@@ -625,9 +627,9 @@ function viewFile(filename) {
     // Remove any trailing slashes
     filename = filename.replace(/\/$/, '');
 
-    // Check if it's a main file
-    if (filename === 'main' || filename === 'main.txt') {
-        openVimViewer('main', content.main.content);
+    // Check if it's a me file
+    if (filename === 'me' || filename === 'me.txt') {
+        openVimViewer('me', content.me.content);
         return;
     }
 
@@ -942,7 +944,7 @@ function autocomplete() {
         }
     } else if (parts.length === 2 && (parts[0] === 'cd' || parts[0] === 'view' || parts[0] === 'ls')) {
         // Complete filename/directory
-        const dirs = ['main', 'publications', 'experiences', 'blog'];
+        const dirs = ['me', 'publications', 'experiences', 'blog'];
         const matches = dirs.filter(dir => dir.startsWith(parts[1]));
         if (matches.length === 1) {
             terminalInput.value = parts[0] + ' ' + matches[0];
