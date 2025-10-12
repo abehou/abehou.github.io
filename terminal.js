@@ -505,22 +505,27 @@ function displayInteractiveList() {
         });
     }
     
-    console.log('📺 Setting vim viewer content...');
-    console.log('  displayContent length:', displayContent.length);
-    console.log('  First 200 chars:', displayContent.substring(0, 200));
-    
-    vimViewer.classList.remove('hidden');
-    vimViewer.dataset.fromList = 'false'; // Reset the flag
-    document.querySelector('.vim-filename').textContent = interactiveType;
-    vimContent.textContent = displayContent; // Use textContent instead of innerHTML
-    
-    console.log('📺 Content set. vimContent.textContent length:', vimContent.textContent.length);
-    
-    // Scroll to selected item
-    scrollToSelectedItem();
-    updateVimStatus();
-    
-    console.log('✅ displayInteractiveList COMPLETE');
+    try {
+        console.log('📺 Setting vim viewer content...');
+        console.log('  displayContent length:', displayContent.length);
+        console.log('  First 200 chars:', displayContent.substring(0, 200));
+        
+        vimViewer.classList.remove('hidden');
+        vimViewer.dataset.fromList = 'false'; // Reset the flag
+        document.querySelector('.vim-filename').textContent = interactiveType;
+        vimContent.textContent = displayContent; // Use textContent instead of innerHTML
+        
+        console.log('📺 Content set. vimContent.textContent length:', vimContent.textContent.length);
+        
+        // Scroll to selected item
+        scrollToSelectedItem();
+        updateVimStatus();
+        
+        console.log('✅ displayInteractiveList COMPLETE');
+    } catch (error) {
+        console.error('❌ ERROR in displayInteractiveList:', error);
+        console.error('Error stack:', error.stack);
+    }
 }
 
 function scrollToSelectedItem() {
