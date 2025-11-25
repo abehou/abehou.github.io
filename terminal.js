@@ -282,6 +282,14 @@ function renderPlainMain() {
     const lines = meData.content.split('\n');
     let html = '<div class="main-content">';
     
+    // Add announcement box
+    html += `
+        <div class="announcement">
+            <div class="announcement-title">Update</div>
+            <p>For those of you who have received my email regarding the Battlesnake study: Yes, I am running the Battlesnake study and not being impersonated. I am using my gmail because my Stanford email does not give permission to cloud-based applications. Please enroll in our study!! It's very fun and rewarding!</p>
+        </div>
+    `;
+    
     for (const line of lines) {
         // Skip all separator lines (===, ---, ╔, ╚, ║, etc.)
         if (line.includes('═') || line.includes('─') || 
@@ -446,6 +454,22 @@ Type 'help' for available commands, or 'ls' to list files.
 
 `;
     addOutput(welcome, 'info');
+    
+    // Add announcement
+    const announcement = `
+┌─────────────────────────────────────────────────────────────────┐
+│ 📢 UPDATE                                                       │
+├─────────────────────────────────────────────────────────────────┤
+│ For those of you who have received my email regarding the       │
+│ Battlesnake study: Yes, I am running the Battlesnake study and  │
+│ not being impersonated. I am using my gmail because my │
+│ Stanford email does not give permission to cloud-based            │
+│ applications. Please enroll in our study!! It's very fun and    │
+│ rewarding!                                                      │
+└─────────────────────────────────────────────────────────────────┘
+`;
+    addOutput(`<div class="terminal-announcement">${announcement}</div>`, 'info');
+    
     executeCommand('ls');
 }
 

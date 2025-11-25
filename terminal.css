@@ -701,6 +701,56 @@ body.light-mode .plain-view::-webkit-scrollbar-thumb:hover {
     color: var(--web-link);
 }
 
+/* Announcement Box */
+.announcement {
+    background: linear-gradient(135deg, rgba(88, 166, 255, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+    border: 1px solid var(--web-link);
+    border-left: 4px solid var(--web-link);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.announcement::before {
+    content: '📢';
+    position: absolute;
+    top: -12px;
+    left: 16px;
+    background: var(--bg-terminal-body);
+    padding: 0 8px;
+    font-size: 1.2rem;
+}
+
+.announcement-title {
+    font-weight: 600;
+    color: var(--web-link);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.announcement p {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--web-text);
+}
+
+/* Terminal announcement styling */
+.terminal-announcement {
+    color: var(--terminal-yellow);
+    border: 1px solid var(--terminal-yellow);
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    background: rgba(229, 192, 123, 0.1);
+}
+
+body.light-mode .terminal-announcement {
+    background: rgba(121, 94, 38, 0.1);
+}
+
 /* Mobile Responsive for Plain View */
 @media (max-width: 768px) {
     .plain-container {
