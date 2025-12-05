@@ -17,8 +17,8 @@ let selectedIndex = 0;
 let interactiveType = ''; // 'publications', 'experiences', 'blog'
 
 // View State
-let currentView = 'terminal'; // 'terminal' or 'plain'
-let currentTheme = 'dark'; // 'dark' or 'light'
+let currentView = 'plain'; // 'terminal' or 'plain'
+let currentTheme = 'light'; // 'dark' or 'light'
 let currentPlainPage = 'me'; // current page in plain view
 
 // DOM Elements
@@ -41,7 +41,7 @@ function initializeView() {
     const savedView = localStorage.getItem('preferredView');
     const savedTheme = localStorage.getItem('preferredTheme');
     
-    // Set theme
+    // Set theme - default is light
     if (savedTheme) {
         currentTheme = savedTheme;
     }
@@ -55,16 +55,16 @@ function initializeView() {
         themeBtnTerminal.querySelector('.label').textContent = 'Dark';
     }
     
-    // Set view - default to plain on mobile unless user has saved preference
+    // Set view - default to plain (web) view unless user has saved preference for terminal
     if (savedView) {
         currentView = savedView;
-    } else if (isMobile()) {
-        currentView = 'plain';
     }
     
     // Apply view
     if (currentView === 'plain') {
         switchToPlainView();
+    } else {
+        switchToTerminalView();
     }
     
     // Update toggle icon
@@ -286,7 +286,7 @@ function renderPlainMain() {
     html += `
         <div class="announcement">
             <div class="announcement-title">Update</div>
-            <p>For those of you who have received my email regarding the Battlesnake study: Yes, I am running the Battlesnake study and not being impersonated. I am using my gmail because my Stanford email does not give permission to cloud-based applications. Please enroll in our study!! It's very fun and rewarding!</p>
+            <p>For those of you who have received my email regarding the Battlesnake study: Yes, I am running the Battlesnake study and NOT being impersonated. I am using my gmail and outlook (abehou@outlook.com) because my Stanford email does not give permission to cloud-based applications. Please enroll in our study!! It's very fun and rewarding!</p>
         </div>
     `;
     
@@ -462,10 +462,10 @@ Type 'help' for available commands, or 'ls' to list files.
 ├─────────────────────────────────────────────────────────────────┤
 │ For those of you who have received my email regarding the       │
 │ Battlesnake study: Yes, I am running the Battlesnake study and  │
-│ not being impersonated. I am using my gmail because my │
-│ Stanford email does not give permission to cloud-based            │
-│ applications. Please enroll in our study!! It's very fun and    │
-│ rewarding!                                                      │
+│ NOT being impersonated. I am using my gmail and outlook         │
+│ (abehou@outlook.com) because my Stanford email does not give    │
+│ permission to cloud-based applications. Please enroll in our    │
+│ study!! It's very fun and rewarding!                            │
 └─────────────────────────────────────────────────────────────────┘
 `;
     addOutput(`<div class="terminal-announcement">${announcement}</div>`, 'info');
