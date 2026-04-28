@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abe Hou — Lab Notebook</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --rule: #30363d;
+    --accent: #79c0ff;
+    --mono: 'JetBrains Mono', 'Monaco', 'Menlo', 'Consolas', monospace;
+    --serif: 'Source Serif 4', 'Charter', 'Iowan Old Style', Georgia, serif;
+    --sans: -apple-system, 'Inter', BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    max-width: 1080px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  aside {
+    padding: 40px 24px;
+    border-right: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 13px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  aside .sigil {
+    color: var(--accent);
+    font-size: 15px;
+    margin-bottom: 32px;
+    letter-spacing: 0.02em;
+  }
+  aside .sigil::before { content: '$ '; color: var(--muted); }
+  aside .block { margin-bottom: 28px; }
+  aside .block-label {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  aside a {
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+    padding: 3px 0;
+  }
+  aside a:hover { color: var(--accent); }
+  aside a.current { color: var(--accent); }
+  aside a.current::before { content: '→ '; color: var(--accent); }
+
+  main {
+    padding: 48px 56px 120px;
+    max-width: 760px;
+  }
+  h1 {
+    font-family: var(--sans);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  h1 .at { color: var(--muted); font-weight: 400; }
+  .tagline {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+  h2 {
+    font-family: var(--mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-top: 56px;
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  p { margin-bottom: 14px; }
+  .lede {
+    font-size: 18px;
+    line-height: 1.65;
+    color: #d1d9e0;
+  }
+  .lede strong { color: var(--accent); font-weight: 600; }
+
+  .theme-card {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .theme-card .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(121, 192, 255, 0.08);
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+  }
+  .theme-card h3 {
+    font-family: var(--sans);
+    font-size: 17px;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .theme-card .authors {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .theme-card .venue {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .theme-card .abstract {
+    font-size: 14px;
+    color: #c9d1d9;
+    line-height: 1.55;
+    margin-bottom: 12px;
+  }
+  .theme-card .pub-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    margin-right: 14px;
+    border-bottom: 1px dashed var(--muted);
+  }
+  .theme-card .pub-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .exp-line {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 15px;
+  }
+  .exp-line .when {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .exp-line .role { font-weight: 600; }
+  .exp-line .org { color: var(--muted); font-size: 14px; }
+
+  @media (max-width: 820px) {
+    .grid { grid-template-columns: 1fr; }
+    aside { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--rule); }
+    main { padding: 32px 20px 80px; }
+  }
+</style>
+</head>
+<body>
+<div class="grid">
+  <aside>
+    <div class="sigil">abehou@stanford</div>
+
+    <div class="block">
+      <div class="block-label">sections</div>
+      <a href="#about" class="current">about</a>
+      <a href="#research">research</a>
+      <a href="#publications">publications</a>
+      <a href="#cv">cv</a>
+      <a href="#notes">notes</a>
+    </div>
+
+    <div class="block">
+      <div class="block-label">threads</div>
+      <a href="#pubs-nvd">non-verifiable domains</a>
+      <a href="#pubs-sim">social simulation</a>
+      <a href="#pubs-hai">human-ai collab</a>
+    </div>
+
+    <div class="block">
+      <div class="block-label">elsewhere</div>
+      <a href="#">twitter</a>
+      <a href="#">github</a>
+      <a href="#">scholar</a>
+    </div>
+
+    <div class="block">
+      <div class="block-label">view</div>
+      <a href="../index.html">› terminal</a>
+    </div>
+  </aside>
+
+  <main>
+    <section id="about">
+      <h1>Abe Hou<span class="at"> / notebook</span></h1>
+      <div class="tagline">// phd student, stanford cs // 2026-04-22</div>
+
+      <p class="lede">
+        I study language models where the answers aren&rsquo;t checkable.
+        Three open questions drive my work:
+        <strong>can LLMs reason in non-verifiable domains?</strong>
+        <strong>what determines human-AI collaboration?</strong>
+        <strong>can simulated societies tell us anything real?</strong>
+      </p>
+      <p>
+        At Stanford I work with Diyi Yang (primary), and collaborate with Chris Manning
+        and Dan Ho. Undergrad at Johns Hopkins with Ben Van Durme, Daniel Khashabi,
+        and Tianxing He.
+      </p>
+    </section>
+
+    <h2 id="publications">/publications</h2>
+
+    <h3 id="pubs-nvd" style="font-family:var(--mono);font-size:13px;color:var(--muted);margin:24px 0 12px;text-transform:uppercase;letter-spacing:0.1em;">
+      ├── non-verifiable domains
+    </h3>
+
+    <article class="theme-card">
+      <span class="tag">#legal-reasoning</span>
+      <h3>Gaps or Hallucinations? Scrutinizing Machine-Generated Legal Analysis</h3>
+      <div class="authors">Hou, Jurayj, Holzenberger, Blair-Stanek, Van Durme</div>
+      <div class="venue">EMNLP 2025 NLLP Workshop</div>
+      <div class="abstract">Legal analysis generation fails in ways standard text metrics miss. We define <em>gaps</em> — structural differences from human-written analysis that aren&rsquo;t strict errors — and train a detector that achieves 67% F1.</div>
+      <div class="pub-links"><a href="#">pdf</a><a href="#">code</a></div>
+    </article>
+
+    <article class="theme-card">
+      <span class="tag">#retrieval</span>
+      <h3>CLERC: A Dataset for Legal Case Retrieval and RAG</h3>
+      <div class="authors">Hou, Weller, Qin, Yang, Lawrie, Holzenberger, Blair-Stanek, Van Durme</div>
+      <div class="venue">NAACL 2025 Findings</div>
+      <div class="abstract">A legal IR + RAG benchmark built with practicing lawyers. GPT-4o generates the highest-ROUGE analyses and also hallucinates the most.</div>
+      <div class="pub-links"><a href="#">pdf</a><a href="#">code</a></div>
+    </article>
+
+    <h3 id="pubs-sim" style="font-family:var(--mono);font-size:13px;color:var(--muted);margin:24px 0 12px;text-transform:uppercase;letter-spacing:0.1em;">
+      ├── social simulation
+    </h3>
+
+    <article class="theme-card">
+      <span class="tag">#policy</span>
+      <h3>Can A Society of Generative Agents Simulate Human Behavior and Inform Public Health Policy?</h3>
+      <div class="authors">Hou, Du, Wang, Zhang, Wang, Liang, Khashabi, Gardner, He</div>
+      <div class="venue">COLM 2025</div>
+      <div class="abstract">100 LLM-powered agents on a social network, calibrated against census demographics. We test vaccine-hesitancy interventions and find both promising signal and real alignment failures.</div>
+      <div class="pub-links"><a href="#">pdf</a><a href="#">code</a></div>
+    </article>
+
+    <h3 style="font-family:var(--mono);font-size:13px;color:var(--muted);margin:24px 0 12px;text-transform:uppercase;letter-spacing:0.1em;">
+      └── earlier — watermarking &amp; detection
+    </h3>
+
+    <article class="theme-card" style="opacity:0.75;">
+      <h3 style="font-size:15px;">SemStamp &amp; k-SemStamp</h3>
+      <div class="venue">NAACL 2024 · ACL 2024 Findings</div>
+      <div class="abstract">Sentence-level semantic watermarking robust to paraphrase attacks.</div>
+    </article>
+
+    <h2 id="cv">/cv</h2>
+    <div class="exp-line">
+      <div class="when">2025—now</div>
+      <div><span class="role">PhD, Stanford CS</span> · <span class="org">Yang / Manning / Ho</span></div>
+    </div>
+    <div class="exp-line">
+      <div class="when">2021—2025</div>
+      <div><span class="role">BS CS + Math, JHU</span> · <span class="org">Van Durme, Khashabi, He</span></div>
+    </div>
+    <div class="exp-line">
+      <div class="when">2023</div>
+      <div><span class="role">RA, UW</span> · <span class="org">Tsvetkov, He</span></div>
+    </div>
+    <div class="exp-line">
+      <div class="when">2022</div>
+      <div><span class="role">SWE Intern, Qualytics</span></div>
+    </div>
+
+    <h2 id="notes">/notes</h2>
+    <p style="color:var(--muted);font-style:italic;">Log of short writeups. First entry: building this site with coding agents.</p>
+  </main>
+</div>
+</body>
+</html>

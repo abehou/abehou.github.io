@@ -6,7 +6,7 @@
       "title": "PhD in Computer Science",
       "organization": "Stanford University",
       "duration": "2025 - Present",
-      "description": "Currently working with Professor Diyi Yang"
+      "description": "Currently working with Professor Chris Manning, Diyi Yang, and Dan Ho"
     },
     "education2.txt": {
       "title": "B.S. Computer Science and Mathematics",
@@ -18,19 +18,19 @@
       "title": "Club Co-Founder & President",
       "organization": "Technology and Policy Society at Johns Hopkins University",
       "duration": "July 2022 - May 2025",
-      "description": "Organized 5+ AI policy seminars and hosted the inaugural AI policy hackathon in Washington, D.C. with $25K from OpenAI and Microsoft."    
+      "description": "Organized 5+ AI policy seminars and hosted the inaugural AI policy hackathon in Washington, D.C. with $25K from OpenAI and Microsoft."
     },
     "activity2.txt": {
       "title": "Director of Programming",
       "organization": "Johns Hopkins Undergraduate Law Review",
       "duration": "Sep 2021 - Sep 2024",
-      "description": "Organized AI & Law and interdisplinary law seminars and edited a few law review articles."    
+      "description": "Organized AI & Law and interdisplinary law seminars and edited a few law review articles."
     },
     "position1.txt": {
       "title": "Research Intern",
       "organization": "JHU CSSE (System Engineering)",
       "duration": "Sep 2024 - May 2025",
-      "description": "Worked with Professor Lauren Gardner and Hongru Du on vaccine hesitancy simulation."    
+      "description": "Worked with Professor Lauren Gardner and Hongru Du on vaccine hesitancy simulation."
     },
     "position2.txt": {
       "title": "Research Intern",
@@ -48,14 +48,13 @@
       "title": "Software Engineering Intern",
       "organization": "Qualytics",
       "duration": "May 2022 - Aug 2022",
-      "description": "Worked on integrating data pipelines for Qualytics' software with OpenMetadata."    
+      "description": "Worked on integrating data pipelines for Qualytics' software with OpenMetadata."
     },
     "position5.txt": {
       "title": "Legal Intern",
       "organization": "Tianyuan Law Firm",
       "duration": "May 2021 - Aug 2021",
-      "description": "Conducted legal research on data protection laws and served clients for IPO filings and pre-IPO compliance."    
+      "description": "Conducted legal research on data protection laws and served clients for IPO filings and pre-IPO compliance."
     }
   }
 }
-

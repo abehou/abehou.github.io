@@ -19,7 +19,6 @@ let interactiveType = ''; // 'publications', 'experiences', 'blog'
 // View State
 let currentView = 'plain'; // 'terminal' or 'plain'
 let currentTheme = 'light'; // 'dark' or 'light'
-let currentPlainPage = 'me'; // current page in plain view
 
 // DOM Elements
 const terminalOutput = document.getElementById('terminal-output');
@@ -28,7 +27,6 @@ const vimViewer = document.getElementById('vim-viewer');
 const vimContent = document.getElementById('vim-content');
 const terminalView = document.getElementById('terminal-view');
 const plainView = document.getElementById('plain-view');
-const plainContent = document.getElementById('plain-content');
 
 // Detect mobile device
 function isMobile() {
@@ -142,15 +140,17 @@ function updateViewToggleIcon() {
 function switchToPlainView() {
     terminalView.classList.add('hidden');
     plainView.classList.add('active');
+    document.body.classList.add('pv-active');
     if (vimViewer) {
         vimViewer.classList.add('hidden');
     }
-    loadPlainPage(currentPlainPage);
+    renderPlainView();
 }
 
 function switchToTerminalView() {
     terminalView.classList.remove('hidden');
     plainView.classList.remove('active');
+    document.body.classList.remove('pv-active');
     if (terminalInput) {
         terminalInput.focus();
     }
@@ -250,140 +250,166 @@ Recent posts:
     }
 }
 
-// Plain View Page Loader
-function loadPlainPage(page) {
-    currentPlainPage = page;
-    
-    // Update active nav link
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-        if (link.dataset.page === page) {
-            link.classList.add('active');
-        }
-    });
-    
-    // Render content
-    if (page === 'me') {
-        renderPlainMain();
-    } else if (page === 'publications') {
-        renderPlainPublications();
-    } else if (page === 'experiences') {
-        renderPlainExperiences();
-    } else if (page === 'blog') {
-        renderPlainBlog();
+// --- Plain View Renderer ---
+// Publications are grouped by the `theme` field on each entry.
+const PV_THEMES = [
+    {
+        id: 'pubs-nvd',
+        key: 'non-verifiable-domains',
+        label: 'Reasoning in non-verifiable domains',
+        blurb: 'Smoothening the jagged intelligence of language models.'
+    },
+    {
+        id: 'pubs-sim',
+        key: 'social-simulation',
+        label: 'Social simulation',
+        blurb: 'Can a sandbox of generative agents tell us anything real about people?'
+    },
+    {
+        id: 'pubs-earlier',
+        key: 'earlier-watermarking',
+        label: 'Earlier — machine-generated text detection',
+        blurb: '',
+        earlier: true
     }
+];
+
+function pvEscape(s) {
+    if (s == null) return '';
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
 }
 
-function renderPlainMain() {
-    const meData = content.me;
-    if (!meData) return;
-    
-    // Convert terminal content to HTML
-    const lines = meData.content.split('\n');
-    let html = '<div class="main-content">';
-    
-    // Add announcement box
-    html += `
-        <div class="announcement">
-            <div class="announcement-title">Update</div>
-            <p>For those of you who have received my email regarding the Battlesnake study: Yes, I am running the Battlesnake study and NOT being impersonated. I am using my gmail and outlook (abehou@outlook.com) because my Stanford email does not give permission to cloud-based applications. Please enroll in our study!! It's very fun and rewarding!</p>
-        </div>
-    `;
-    
-    for (const line of lines) {
-        // Skip all separator lines (===, ---, ╔, ╚, ║, etc.)
-        if (line.includes('═') || line.includes('─') || 
-            line.includes('╔') || line.includes('╚') || line.includes('║')) {
-            continue;
-        }
-        
-        if (line.trim().startsWith('ABE HOU')) {
-            continue;
-        } else if (line.includes('CONTACT & SOCIAL')) {
-            html += '<h3>Contact & Social</h3>';
-        } else if (line.includes('http')) {
-            // Convert URLs to links
-            const urlMatch = line.match(/(https?:\/\/[^\s]+)/);
-            if (urlMatch) {
-                const url = urlMatch[1];
-                const label = line.split(':')[0].trim() || 'Link';
-                html += `<p><strong>${label}:</strong> <a href="${url}" target="_blank">${url}</a></p>`;
+function pvEscapeAttr(s) {
+    return pvEscape(s).replace(/"/g, '&quot;');
+}
+
+function pvParseLinks(linksStr) {
+    if (!linksStr) return '';
+    return linksStr
+        .split('|')
+        .map(link => {
+            const m = link.trim().match(/\[(.*?)\]\s*(.*)/);
+            if (!m) return '';
+            const [, label, url] = m;
+            const trimmed = url.trim();
+            if (!trimmed || trimmed === '#') return '';
+            return `<a href="${pvEscapeAttr(trimmed)}" target="_blank">${pvEscape(label.toLowerCase())}</a>`;
+        })
+        .filter(Boolean)
+        .join('');
+}
+
+function renderPlainView() {
+    renderPlainPubs();
+    renderPlainCV();
+}
+
+// Highlight the sidebar nav entry whose section is currently in view.
+function initScrollSpy() {
+    const sections = Array.from(document.querySelectorAll('.pv-main section[id]'));
+    if (sections.length === 0) return;
+
+    const navById = {};
+    document.querySelectorAll('.pv-nav').forEach(link => {
+        const id = link.getAttribute('href') || '';
+        if (id.startsWith('#')) navById[id.slice(1)] = link;
+    });
+
+    const setCurrent = id => {
+        Object.entries(navById).forEach(([navId, link]) => {
+            link.classList.toggle('current', navId === id);
+        });
+    };
+
+    const visible = new Map();
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                visible.set(entry.target.id, entry.intersectionRatio);
+            } else {
+                visible.delete(entry.target.id);
             }
-        } else if (line.trim()) {
-            html += `<p>${line.trim()}</p>`;
+        });
+        if (visible.size === 0) return;
+        let bestId = null;
+        let bestRatio = -1;
+        visible.forEach((ratio, id) => {
+            if (ratio > bestRatio) { bestRatio = ratio; bestId = id; }
+        });
+        if (bestId) setCurrent(bestId);
+    }, {
+        root: null,
+        rootMargin: '-30% 0px -55% 0px',
+        threshold: [0, 0.25, 0.5, 0.75, 1]
+    });
+
+    sections.forEach(s => observer.observe(s));
+}
+
+function renderPlainPubs() {
+    const host = document.getElementById('pv-pubs-body');
+    if (!host) return;
+    const pubs = content.publications && content.publications.files;
+    if (!pubs) return;
+
+    const grouped = {};
+    Object.values(pubs).forEach(pub => {
+        const theme = pub.theme || 'earlier-watermarking';
+        if (!grouped[theme]) grouped[theme] = [];
+        grouped[theme].push(pub);
+    });
+
+    let html = '';
+    PV_THEMES.forEach(theme => {
+        const items = grouped[theme.key] || [];
+        if (items.length === 0 && !theme.alwaysShow) return;
+
+        const classes = ['pv-theme'];
+        if (theme.earlier) classes.push('earlier');
+
+        html += `<div class="${classes.join(' ')}" id="${theme.id}">`;
+        html += `<div class="pv-theme-label">${pvEscape(theme.label)}</div>`;
+        if (theme.blurb) {
+            html += `<div class="pv-theme-blurb">${pvEscape(theme.blurb)}</div>`;
         }
-    }
-    
-    html += '</div>';
-    plainContent.innerHTML = html;
+        items.forEach(pub => {
+            const links = pvParseLinks(pub.links);
+            html += `<div class="pv-pub">`
+                + `<span class="pv-pub-title">${pvEscape(pub.title)}.</span> `
+                + `<span class="pv-pub-authors">${pvEscape(pub.authors)}.</span> `
+                + `<span class="pv-pub-venue">${pvEscape(pub.venue)}.</span> `
+                + `<span class="pv-pub-links">${links}</span>`
+                + `</div>`;
+        });
+        html += `</div>`;
+    });
+
+    host.innerHTML = html;
 }
 
-function renderPlainPublications() {
-    const pubs = content.publications;
-    if (!pubs || !pubs.files) return;
-    
-    let html = '<h2>Publications</h2>';
-    
-    Object.entries(pubs.files).forEach(([filename, pub]) => {
-        html += `
-            <div class="item">
-                <div class="item-title">${pub.title}</div>
-                <div class="item-meta">${pub.authors.replace(/<strong>/g, '<strong>').replace(/<\/strong>/g, '</strong>')}</div>
-                <div class="item-meta"><em>${pub.venue}</em></div>
-                <div class="item-meta">${pub.abstract}</div>
-                <div class="item-links">
-                    ${pub.links.split('|').map(link => {
-                        const match = link.trim().match(/\[(.*?)\]\s*(.*)/);
-                        if (match) {
-                            const [, text, url] = match;
-                            return url.trim() === '#' ? `<span style="color: #888;">[${text}]</span>` : `<a href="${url.trim()}" target="_blank">[${text}]</a>`;
-                        }
-                        return '';
-                    }).join(' ')}
-                </div>
-            </div>
-        `;
-    });
-    
-    plainContent.innerHTML = html;
-}
+function renderPlainCV() {
+    const host = document.getElementById('pv-cv-body');
+    if (!host) return;
+    const exps = content.experiences && content.experiences.files;
+    if (!exps) return;
 
-function renderPlainExperiences() {
-    const exps = content.experiences;
-    if (!exps || !exps.files) return;
-    
-    let html = '<h2>Experience</h2>';
-    
-    Object.entries(exps.files).forEach(([filename, exp]) => {
-        html += `
-            <div class="item">
-                <div class="item-title">${exp.title}</div>
-                <div class="item-meta"><strong>${exp.organization}</strong> | ${exp.duration}</div>
-                <div class="item-meta">${exp.description}</div>
-            </div>
-        `;
+    let html = '';
+    Object.values(exps).forEach(exp => {
+        const orgLine = exp.description
+            ? `${pvEscape(exp.organization)} — ${pvEscape(exp.description)}`
+            : pvEscape(exp.organization);
+        html += `<div class="pv-exp-row">`
+            + `<div class="pv-when">${pvEscape(exp.duration)}</div>`
+            + `<div class="pv-what">`
+            +   `<span class="pv-role">${pvEscape(exp.title)}</span><br>`
+            +   `<span class="pv-org">${orgLine}</span>`
+            + `</div>`
+            + `</div>`;
     });
-    
-    plainContent.innerHTML = html;
-}
-
-function renderPlainBlog() {
-    const blog = content.blog;
-    if (!blog || !blog.files) return;
-    
-    let html = '<h2>Blog</h2>';
-    
-    Object.entries(blog.files).forEach(([filename, post]) => {
-        html += `
-            <div class="item">
-                <div class="item-title">${post.title}</div>
-                <div class="item-meta">${post.date}</div>
-                <div class="item-meta">${post.content}</div>
-            </div>
-        `;
-    });
-    
-    plainContent.innerHTML = html;
+    host.innerHTML = html;
 }
 
 // Initialize Terminal
@@ -425,13 +451,16 @@ async function init() {
     }
     document.addEventListener('keydown', handleVimKeypress);
     
-    // Plain view nav listeners
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            loadPlainPage(link.dataset.page);
+    // Plain view sidebar nav — update current highlight on click
+    // (anchor href handles the actual scroll to section)
+    document.querySelectorAll('.pv-nav').forEach(link => {
+        link.addEventListener('click', () => {
+            document.querySelectorAll('.pv-nav').forEach(l => l.classList.remove('current'));
+            link.classList.add('current');
         });
     });
+
+    initScrollSpy();
     
     // Keep terminal input focused when in terminal view
     document.addEventListener('click', () => {
@@ -454,22 +483,7 @@ Type 'help' for available commands, or 'ls' to list files.
 
 `;
     addOutput(welcome, 'info');
-    
-    // Add announcement
-    const announcement = `
-┌─────────────────────────────────────────────────────────────────┐
-│ 📢 UPDATE                                                       │
-├─────────────────────────────────────────────────────────────────┤
-│ For those of you who have received my email regarding the       │
-│ Battlesnake study: Yes, I am running the Battlesnake study and  │
-│ NOT being impersonated. I am using my gmail and outlook         │
-│ (abehou@outlook.com) because my Stanford email does not give    │
-│ permission to cloud-based applications. Please enroll in our    │
-│ study!! It's very fun and rewarding!                            │
-└─────────────────────────────────────────────────────────────────┘
-`;
-    addOutput(`<div class="terminal-announcement">${announcement}</div>`, 'info');
-    
+
     executeCommand('ls');
 }
 

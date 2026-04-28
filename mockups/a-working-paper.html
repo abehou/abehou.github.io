@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abe Hou — Working Paper</title>
+<style>
+  :root {
+    --bg: #fbfaf7;
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --rule: #dcd8d0;
+    --accent: #6b2c2c;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Charter', 'Source Serif 4', 'Iowan Old Style', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.55;
+    padding: 60px 24px 120px;
+  }
+  main {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 18px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .masthead h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .masthead nav { font-size: 13px; color: var(--muted); }
+  .masthead nav a {
+    color: var(--muted);
+    text-decoration: none;
+    margin-left: 18px;
+  }
+  .masthead nav a:hover { color: var(--text); text-decoration: underline; }
+  .meta {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 32px;
+  }
+  section { margin-bottom: 56px; }
+  h2 {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  p { margin-bottom: 14px; }
+  .lede {
+    font-size: 18px;
+    line-height: 1.65;
+  }
+  .lede em { color: var(--accent); font-style: normal; font-weight: 600; }
+  a.link {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--muted);
+  }
+  a.link:hover { border-bottom-color: var(--accent); color: var(--accent); }
+
+  .theme {
+    margin-bottom: 32px;
+  }
+  .theme-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .theme-blurb {
+    font-size: 15px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 16px;
+    padding-left: 0;
+  }
+  .pub {
+    font-size: 15px;
+    line-height: 1.5;
+    padding-left: 20px;
+    text-indent: -20px;
+    margin-bottom: 12px;
+  }
+  .pub .title { font-weight: 600; }
+  .pub .authors, .pub .venue {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .pub .venue { font-style: italic; }
+  .pub .pub-links { font-size: 13px; }
+  .pub .pub-links a { color: var(--muted); margin-right: 12px; }
+
+  .earlier {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+  }
+  .earlier .theme-label { color: var(--muted); }
+
+  .exp-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 20px;
+    padding: 12px 0;
+    border-bottom: 1px dotted var(--rule);
+    font-size: 15px;
+  }
+  .exp-row .when { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .exp-row .what .role { font-weight: 600; }
+  .exp-row .what .org { color: var(--muted); font-size: 14px; }
+
+  footer {
+    margin-top: 80px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+  footer a { color: var(--muted); text-decoration: none; margin-left: 16px; }
+  footer a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+<main>
+  <header class="masthead">
+    <h1>Abe Bohan Hou</h1>
+    <nav>
+      <a href="#research">Research</a>
+      <a href="#pubs">Publications</a>
+      <a href="#cv">CV</a>
+      <a href="#writing">Writing</a>
+    </nav>
+  </header>
+
+  <div class="meta">Stanford CS · PhD, 2025— · working with Diyi Yang, Chris Manning, Dan Ho</div>
+
+  <section id="research">
+    <p class="lede">
+      I study how language models behave when there is no verifier —
+      no unit test, no ground-truth label, no clean reward — and whether
+      we can nevertheless get them to reason, collaborate with humans,
+      and simulate the messy social systems they are deployed in. I care
+      about <em>non-verifiable domains</em>, <em>human–AI collaboration</em>,
+      and <em>social simulation</em>.
+    </p>
+    <p>
+      Before Stanford I worked with Ben Van Durme, Daniel Khashabi, and
+      Tianxing He at Johns Hopkins. Most of what I&rsquo;ve published so far
+      lives at the intersection of legal reasoning, text generation, and
+      agent-based modeling.
+    </p>
+  </section>
+
+  <section id="pubs">
+    <h2>Publications</h2>
+
+    <div class="theme">
+      <div class="theme-label">Reasoning in non-verifiable domains</div>
+      <div class="theme-blurb">Legal analysis, open-ended generation — where the answer is not a token but an argument.</div>
+
+      <div class="pub">
+        <span class="title">Gaps or Hallucinations? Scrutinizing Machine-Generated Legal Analysis.</span>
+        <span class="authors">A. B. Hou, W. Jurayj, N. Holzenberger, A. Blair-Stanek, B. Van Durme.</span>
+        <span class="venue">EMNLP 2025 NLLP.</span>
+        <span class="pub-links"><a href="#">[pdf]</a><a href="#">[code]</a></span>
+      </div>
+      <div class="pub">
+        <span class="title">CLERC: A Dataset for Legal Case Retrieval and Retrieval-Augmented Analysis Generation.</span>
+        <span class="authors">A. B. Hou, O. Weller, G. Qin, E. Yang, D. Lawrie, N. Holzenberger, A. Blair-Stanek, B. Van Durme.</span>
+        <span class="venue">NAACL 2025 Findings.</span>
+        <span class="pub-links"><a href="#">[pdf]</a><a href="#">[code]</a></span>
+      </div>
+      <div class="pub">
+        <span class="title">L-FRESco: Factual Recall Evaluation Score for Legal Analysis Generation.</span>
+        <span class="authors">A. B. Hou, Z. Jiang, G. Qin, O. Weller, A. Blair-Stanek, B. Van Durme.</span>
+        <span class="venue">ICML 2024 GenLaw Workshop.</span>
+        <span class="pub-links"><a href="#">[pdf]</a></span>
+      </div>
+    </div>
+
+    <div class="theme">
+      <div class="theme-label">Social simulation</div>
+      <div class="theme-blurb">Can a sandbox of generative agents tell us anything real about people?</div>
+
+      <div class="pub">
+        <span class="title">Can A Society of Generative Agents Simulate Human Behavior and Inform Public Health Policy? A Case Study on Vaccine Hesitancy.</span>
+        <span class="authors">A. B. Hou, H. Du, Y. Wang, J. Zhang, Z. Wang, P. P. Liang, D. Khashabi, L. Gardner, T. He.</span>
+        <span class="venue">COLM 2025.</span>
+        <span class="pub-links"><a href="#">[pdf]</a><a href="#">[code]</a></span>
+      </div>
+    </div>
+
+    <div class="theme earlier">
+      <div class="theme-label">Earlier work — machine-generated text detection</div>
+
+      <div class="pub">
+        <span class="title">k-SemStamp: A Clustering-Based Semantic Watermark.</span>
+        <span class="authors">A. B. Hou, J. Zhang, Y. Wang, D. Khashabi, T. He.</span>
+        <span class="venue">ACL 2024 Findings.</span>
+      </div>
+      <div class="pub">
+        <span class="title">SemStamp: A Semantic Watermark with Paraphrastic Robustness.</span>
+        <span class="authors">A. B. Hou, J. Zhang, T. He, Y. Wang, Y.-S. Chuang, H. Wang, L. Shen, B. Van Durme, D. Khashabi, Y. Tsvetkov.</span>
+        <span class="venue">NAACL 2024.</span>
+      </div>
+      <div class="pub">
+        <span class="title">Stumbling Blocks: Stress Testing the Robustness of Machine-Generated Text Detectors.</span>
+        <span class="authors">Y. Wang, S. Feng, A. Hou, X. Pu, C. Shen, X. Liu, Y. Tsvetkov, T. He.</span>
+        <span class="venue">ACL 2024.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="cv">
+    <h2>CV</h2>
+    <div class="exp-row">
+      <div class="when">2025 — now</div>
+      <div class="what"><span class="role">PhD, Computer Science</span><br><span class="org">Stanford University · Diyi Yang (primary), Chris Manning, Dan Ho</span></div>
+    </div>
+    <div class="exp-row">
+      <div class="when">2021 — 2025</div>
+      <div class="what"><span class="role">B.S. Computer Science and Mathematics</span><br><span class="org">Johns Hopkins University</span></div>
+    </div>
+    <div class="exp-row">
+      <div class="when">2024 — 2025</div>
+      <div class="what"><span class="role">Research Intern, JHU CSSE</span><br><span class="org">Lauren Gardner, Hongru Du — vaccine hesitancy simulation</span></div>
+    </div>
+    <div class="exp-row">
+      <div class="when">2023 — 2025</div>
+      <div class="what"><span class="role">Research Intern, JHU CLSP</span><br><span class="org">Ben Van Durme — legal case retrieval, RAG</span></div>
+    </div>
+    <div class="exp-row">
+      <div class="when">2023</div>
+      <div class="what"><span class="role">Research Intern, University of Washington</span><br><span class="org">Yulia Tsvetkov, Tianxing He — semantic watermarking</span></div>
+    </div>
+  </section>
+
+  <section id="writing">
+    <h2>Writing</h2>
+    <p style="font-size:15px;color:var(--muted);font-style:italic;">More coming. The first post is a meta-note on building this site with coding agents.</p>
+  </section>
+
+  <footer>
+    <div>© 2026 Abe Hou</div>
+    <div>
+      <a class="link" href="#">Twitter</a>
+      <a class="link" href="#">GitHub</a>
+      <a class="link" href="#">Scholar</a>
+    </div>
+  </footer>
+</main>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="stf_logo_white.png">
     <link rel="stylesheet" href="terminal.css">
 </head>
+
 <body>
     <!-- Terminal View -->
     <div class="terminal-container" id="terminal-view">
@@ -41,40 +43,85 @@
 
     <!-- Plain View -->
     <div class="plain-view" id="plain-view">
-        <div class="plain-container">
-            <header class="plain-header">
-                <div class="header-top">
-                    <h1 class="name">Abe Hou</h1>
-                    <!-- View Toggle Controls -->
-                    <div class="view-controls">
-                        <button id="theme-toggle" class="control-btn" title="Toggle Light/Dark Mode">
-                            <span class="icon">☀️</span>
-                            <span class="label">Light</span>
-                        </button>
-                        <button id="view-toggle" class="control-btn" title="Toggle Terminal/Plain View">
-                            <span class="icon">📄</span>
-                            <span class="label">Web</span>
-                        </button>
-                    </div>
-                </div>
-                <nav class="plain-nav">
-                    <a href="#" data-page="me" class="nav-link active">Home</a>
-                    <a href="#" data-page="publications" class="nav-link">Publications</a>
-                    <a href="#" data-page="experiences" class="nav-link">Experience</a>
-                    <a href="#" data-page="blog" class="nav-link">Blog</a>
-                </nav>
+        <aside class="pv-aside">
+            <div class="pv-sigil">abehou<span class="pv-host">@stanford</span></div>
+
+            <div class="pv-block">
+                <div class="pv-block-label">sections</div>
+                <a href="#pv-about" class="pv-nav current">about</a>
+                <a href="#pv-publications" class="pv-nav">publications</a>
+                <a href="#pv-cv" class="pv-nav">cv</a>
+            </div>
+
+            <div class="pv-block extra">
+                <div class="pv-block-label">threads</div>
+                <a href="#pubs-nvd">non-verifiable domains</a>
+                <a href="#pubs-sim">social simulation</a>
+            </div>
+
+            <div class="pv-block extra">
+                <div class="pv-block-label">elsewhere</div>
+                <a href="https://twitter.com/abe_hou" target="_blank">twitter</a>
+                <a href="https://github.com/abehou" target="_blank">github</a>
+                <a href="https://scholar.google.com/citations?user=H5-QJloAAAAJ&hl=en" target="_blank">scholar</a>
+            </div>
+
+            <div class="pv-block">
+                <div class="pv-block-label">view</div>
+                <button id="view-toggle" class="control-btn pv-ctl" title="Toggle Terminal/Plain View">
+                    <span class="icon">💻</span>
+                    <span class="label">Terminal</span>
+                </button>
+                <button id="theme-toggle" class="control-btn pv-ctl" title="Toggle Light/Dark Mode">
+                    <span class="icon">🌙</span>
+                    <span class="label">Dark</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="pv-main">
+            <header class="pv-masthead">
+                <h1>Abe Bohan Hou</h1>
+                <div class="pv-sub">Stanford CS · PhD 2025—</div>
             </header>
-            <main class="plain-content" id="plain-content">
-                <!-- Content will be dynamically loaded here -->
-            </main>
-            <footer class="plain-footer">
-                <div class="social-links">
-                    <a href="https://twitter.com/abe_hou" target="_blank" aria-label="Twitter">Twitter</a>
-                    <a href="https://github.com/abehou" target="_blank" aria-label="GitHub">GitHub</a>
+
+            <section id="pv-about">
+                <p>Hi! I am Abe Hou.</p>
+                <p>
+                    I am a PhD student in Computer Science at Stanford University,
+                    working with Chris Manning, Diyi Yang, and Dan Ho.
+                </p>
+                <p class="pv-lede">
+                    I am interested in making language models work in
+                    <em>non-verifiable domains</em>, <em>human–AI collaboration</em>,
+                    and <em>social simulation</em>.
+                </p>
+                <p>
+                    I graduated from Johns Hopkins University with a B.S. in
+                    Computer Science and Mathematics. I am extremely grateful to
+                    have worked with Ben Van Durme, Daniel Khashabi, and Tianxing He.
+                </p>
+            </section>
+
+            <section id="pv-publications">
+                <h2>Publications</h2>
+                <div id="pv-pubs-body"><!-- rendered by terminal.js --></div>
+            </section>
+
+            <section id="pv-cv">
+                <h2>CV</h2>
+                <div id="pv-cv-body"><!-- rendered by terminal.js --></div>
+            </section>
+
+            <footer class="pv-footer">
+                <div>© 2026 Abe Hou</div>
+                <div class="pv-footer-links">
+                    <a href="https://twitter.com/abe_hou" target="_blank">twitter</a>
+                    <a href="https://github.com/abehou" target="_blank">github</a>
+                    <a href="https://scholar.google.com/citations?user=H5-QJloAAAAJ&hl=en" target="_blank">scholar</a>
                 </div>
-                <p>© 2025 Abe Hou</p>
             </footer>
-        </div>
+        </main>
     </div>
 
     <!-- Vim-style viewer (hidden by default) -->
@@ -91,4 +138,5 @@
 
     <script src="terminal.js"></script>
 </body>
+
 </html>

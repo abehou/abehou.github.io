@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abe Hou — Essay</title>
+<style>
+  :root {
+    --bg: #fdfdfb;
+    --ink: #111;
+    --muted: #777;
+    --soft: #e8e4dc;
+    --mark: #c5502b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Source Serif 4', 'Charter', 'Iowan Old Style', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.65;
+    padding: 80px 24px 160px;
+  }
+  article { max-width: 620px; margin: 0 auto; }
+  header {
+    margin-bottom: 64px;
+    text-align: left;
+  }
+  header .name {
+    font-family: -apple-system, 'Inter', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-size: 40px;
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+  }
+  header .sub {
+    color: var(--muted);
+    font-size: 17px;
+    font-style: italic;
+  }
+
+  .illustration {
+    margin: 48px 0;
+    text-align: center;
+  }
+  .illustration svg { max-width: 100%; height: auto; }
+  .illustration .cap {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  p { margin-bottom: 22px; }
+  p:first-of-type::first-letter {
+    font-size: 56px;
+    float: left;
+    line-height: 1;
+    font-weight: 600;
+    padding: 4px 10px 0 0;
+    color: var(--mark);
+  }
+  em.highlight {
+    background: linear-gradient(transparent 65%, rgba(197, 80, 43, 0.2) 65%);
+    font-style: normal;
+    padding: 0 2px;
+  }
+  a.inline {
+    color: var(--ink);
+    text-decoration: none;
+    background-image: linear-gradient(transparent 90%, var(--mark) 90%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 0 1px;
+  }
+  a.inline:hover { background-size: 100% 60%; }
+
+  h2 {
+    font-family: -apple-system, 'Inter', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    font-weight: 600;
+    margin: 80px 0 24px;
+    padding-top: 24px;
+    border-top: 1px solid var(--soft);
+  }
+
+  .aside-pub {
+    margin: 22px 0;
+    padding: 10px 0 10px 18px;
+    border-left: 3px solid var(--soft);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .aside-pub .title { font-weight: 600; display: block; }
+  .aside-pub .meta { color: var(--muted); font-size: 14px; font-style: italic; }
+  .aside-pub .links { font-size: 13px; margin-top: 4px; }
+  .aside-pub .links a { color: var(--muted); margin-right: 10px; border-bottom: 1px dotted var(--muted); text-decoration: none; }
+
+  .cv-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--soft);
+    font-size: 16px;
+  }
+  .cv-row .when { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  footer {
+    margin-top: 100px;
+    padding-top: 24px;
+    border-top: 1px solid var(--soft);
+    font-size: 14px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer a { color: var(--muted); text-decoration: none; margin-right: 14px; border-bottom: 1px dotted var(--muted); }
+  footer a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    body { padding: 40px 18px 80px; font-size: 17px; }
+    header h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+<article>
+  <header>
+    <div class="name">Abe Bohan Hou</div>
+    <h1>A language model walks into a courtroom, a clinic, and a simulated town.</h1>
+    <div class="sub">Stanford CS, working with Diyi Yang, Chris Manning, and Dan Ho.</div>
+  </header>
+
+  <p>
+    The easy problems in machine learning are the ones with verifiers: compile-or-not,
+    win-or-lose, pass-or-fail. Everything interesting happens outside that regime. A lawyer
+    doesn&rsquo;t get a unit test for a brief. A public-health officer can&rsquo;t A/B test
+    hesitancy interventions on a real population. A software team collaborating with an
+    AI tool has no ground-truth trajectory for what good collaboration looks like. These are
+    the problems I care about.
+  </p>
+
+  <div class="illustration">
+    <svg viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="node" cx="50%" cy="50%">
+          <stop offset="0%" stop-color="#c5502b"/>
+          <stop offset="100%" stop-color="#c5502b" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- edges -->
+      <g stroke="#bbb" stroke-width="1" fill="none" opacity="0.7">
+        <line x1="70" y1="80" x2="150" y2="40"/>
+        <line x1="70" y1="80" x2="150" y2="120"/>
+        <line x1="150" y1="40" x2="240" y2="60"/>
+        <line x1="150" y1="120" x2="240" y2="100"/>
+        <line x1="240" y1="60" x2="330" y2="40"/>
+        <line x1="240" y1="60" x2="330" y2="90"/>
+        <line x1="240" y1="100" x2="330" y2="120"/>
+        <line x1="150" y1="40" x2="150" y2="120"/>
+        <line x1="240" y1="60" x2="240" y2="100"/>
+      </g>
+      <!-- nodes -->
+      <g fill="#111">
+        <circle cx="70" cy="80" r="6"/>
+        <circle cx="150" cy="40" r="5"/>
+        <circle cx="150" cy="120" r="5"/>
+        <circle cx="240" cy="60" r="5"/>
+        <circle cx="240" cy="100" r="5"/>
+        <circle cx="330" cy="40" r="4"/>
+        <circle cx="330" cy="90" r="4"/>
+        <circle cx="330" cy="120" r="4"/>
+      </g>
+      <circle cx="240" cy="60" r="14" fill="url(#node)"/>
+    </svg>
+    <div class="cap">a sketch: information propagation through a small agent society</div>
+  </div>
+
+  <p>
+    Three threads run through the work.
+    The first is <em class="highlight">reasoning in non-verifiable domains</em> — mostly
+    through the lens of law, where a good answer has to cite precedent, track counterfactuals,
+    and hold up to adversarial reading. Much of my undergrad at Johns Hopkins with
+    Ben Van Durme went into building datasets and evaluations that don&rsquo;t collapse
+    into ROUGE scores.
+  </p>
+
+  <div class="aside-pub">
+    <span class="title">CLERC: Legal Case Retrieval and RAG</span>
+    <span class="meta">Hou et al. — NAACL 2025 Findings</span>
+    <div class="links"><a href="#">pdf</a><a href="#">code</a></div>
+  </div>
+  <div class="aside-pub">
+    <span class="title">Gaps or Hallucinations? Scrutinizing Machine-Generated Legal Analysis</span>
+    <span class="meta">Hou et al. — EMNLP 2025 NLLP</span>
+    <div class="links"><a href="#">pdf</a><a href="#">code</a></div>
+  </div>
+
+  <p>
+    The second is <em class="highlight">social simulation</em>.
+    I&rsquo;m drawn to the oldest question in applied math: when does a simulation
+    tell you something real about the thing it&rsquo;s modeling, and when is it an
+    elaborate cartoon? With Lauren Gardner and Tianxing He we built
+    VacSim, a hundred-agent society calibrated on census data, to ask whether
+    LLM-powered agents can stand in for real people when modeling policy effects.
+    The answer is <em>partially, and the failures are more interesting than the successes</em>.
+  </p>
+
+  <div class="aside-pub">
+    <span class="title">Can a Society of Generative Agents Simulate Human Behavior and Inform Public Health Policy?</span>
+    <span class="meta">Hou et al. — COLM 2025</span>
+    <div class="links"><a href="#">pdf</a><a href="#">code</a></div>
+  </div>
+
+  <p>
+    The third is <em class="highlight">human–AI collaboration</em>, which is new territory
+    for me at Stanford with Diyi Yang. We&rsquo;re running a longitudinal study using
+    a controlled programming task to measure what actually changes when developers
+    work with AI tools — not "is it faster," but what shifts in how people reason,
+    debug, and delegate. A paper is in progress.
+  </p>
+
+  <p>
+    Before all this, I worked on watermarking machine-generated text with
+    Yulia Tsvetkov and Tianxing He at the University of Washington. That line of
+    work taught me a lot about what I don&rsquo;t want to do long-term, which is
+    its own kind of useful.
+  </p>
+
+  <h2>Earlier publications</h2>
+  <div class="aside-pub">
+    <span class="title">k-SemStamp</span>
+    <span class="meta">Hou et al. — ACL 2024 Findings</span>
+  </div>
+  <div class="aside-pub">
+    <span class="title">SemStamp</span>
+    <span class="meta">Hou et al. — NAACL 2024</span>
+  </div>
+  <div class="aside-pub">
+    <span class="title">Stumbling Blocks: Stress Testing MGT Detectors</span>
+    <span class="meta">Wang et al. — ACL 2024</span>
+  </div>
+
+  <h2>CV</h2>
+  <div class="cv-row"><span>PhD, Stanford CS (Yang / Manning / Ho)</span><span class="when">2025—</span></div>
+  <div class="cv-row"><span>BS Computer Science + Mathematics, JHU</span><span class="when">2021—2025</span></div>
+  <div class="cv-row"><span>Research, JHU CSSE — Gardner, Du</span><span class="when">2024—2025</span></div>
+  <div class="cv-row"><span>Research, JHU CLSP — Van Durme</span><span class="when">2023—2025</span></div>
+  <div class="cv-row"><span>Research, UW — Tsvetkov, He</span><span class="when">2023</span></div>
+
+  <footer>
+    <div>© 2026 Abe Hou</div>
+    <div>
+      <a href="#">Twitter</a>
+      <a href="#">GitHub</a>
+      <a href="#">Scholar</a>
+      <a href="../index.html">Terminal view</a>
+    </div>
+  </footer>
+</article>
+</body>
+</html>

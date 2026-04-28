@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Mockups — abehou.github.io</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, 'Inter', BlinkMacSystemFont, sans-serif;
+    background: #0f1012;
+    color: #e8e6e1;
+    padding: 60px 24px 120px;
+    line-height: 1.6;
+  }
+  main { max-width: 820px; margin: 0 auto; }
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .sub { color: #888; margin-bottom: 48px; font-size: 15px; }
+  .card {
+    display: block;
+    padding: 28px 32px;
+    border: 1px solid #2a2b2f;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .card:hover { border-color: #6b8cff; transform: translateY(-2px); }
+  .card .letter {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 48px;
+    font-weight: 500;
+    float: right;
+    color: #6b8cff;
+    line-height: 1;
+    margin-left: 16px;
+  }
+  .card h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .card .kind {
+    font-size: 13px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .card p { font-size: 15px; color: #c7c5c0; margin-bottom: 10px; }
+  .card .tags {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #888;
+    font-family: 'JetBrains Mono', Monaco, monospace;
+  }
+  .note {
+    margin-top: 40px;
+    padding: 20px 24px;
+    background: #181a1d;
+    border-left: 3px solid #6b8cff;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #b3b0ab;
+  }
+  .note strong { color: #e8e6e1; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Three design directions for abehou.github.io (plain view)</h1>
+  <p class="sub">Open each in a new tab. Terminal view is unchanged. Pick one, or tell me which parts of which to combine.</p>
+
+  <a class="card" href="a-working-paper.html" target="_blank">
+    <span class="letter">A</span>
+    <h2>Working Paper</h2>
+    <div class="kind">Serif · narrow column · arxiv preprint</div>
+    <p>Black-on-cream, single 640px column, 17px serif body. Pubs as hanging-indent citations grouped by theme. The vibe: if you printed the page, it looks like a preprint draft. Quiet, dense, unmistakably academic.</p>
+    <div class="tags">charter · dense · no decoration · least risky</div>
+  </a>
+
+  <a class="card" href="b-lab-notebook.html" target="_blank">
+    <span class="letter">B</span>
+    <h2>Lab Notebook</h2>
+    <div class="kind">Dark mode · two-column · echoes the terminal</div>
+    <p>Mono sidebar with <code style="font-family:Monaco,monospace;font-size:13px;color:#79c0ff;">$ abehou@stanford</code> prompt, pubs rendered as cards with theme tags. Threads the identity between terminal and plain views, so the toggle feels like two views of the same thing instead of two unrelated sites.</p>
+    <div class="tags">jetbrains mono · cards · identity-continuous · medium risk</div>
+  </a>
+
+  <a class="card" href="c-essay.html" target="_blank">
+    <span class="letter">C</span>
+    <h2>Essay</h2>
+    <div class="kind">Prose-led · drop cap · gwern-style longform</div>
+    <p>Opens with a real sentence, not a resume bullet. Publications are embedded inside the narrative as pull-quotes — you read about a research thread, and the pub that backs it appears in the margin-ish. One minimal SVG illustration. The most opinionated, the most "you" if the prose lands.</p>
+    <div class="tags">source serif · drop cap · highest personality · highest risk</div>
+  </a>
+
+  <div class="note">
+    <strong>My honest read:</strong> B is the safest good answer — it makes the terminal↔plain toggle feel intentional instead of arbitrary. C is the best answer if the opening paragraph is actually <em>you</em> (which I drafted but you should rewrite). A is the default "don&rsquo;t embarrass me" option — strong but forgettable.
+    <br><br>
+    None of these touch the terminal view. All three use your real pub data and the three-theme grouping we discussed. No framework, no build step, just HTML + CSS.
+  </div>
+</main>
+</body>
+</html>
