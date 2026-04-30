@@ -396,20 +396,37 @@ function renderPlainCV() {
     const exps = content.experiences && content.experiences.files;
     if (!exps) return;
 
-    let html = '';
-    Object.values(exps).forEach(exp => {
+    const entries = Object.entries(exps);
+    const education = entries.filter(([key]) => key.startsWith('education'));
+    const rest = entries.filter(([key]) => !key.startsWith('education'));
+
+    const renderRow = ([, exp]) => {
         const orgLine = exp.description
             ? `${pvEscape(exp.organization)} — ${pvEscape(exp.description)}`
             : pvEscape(exp.organization);
-        html += `<div class="pv-exp-row">`
+        return `<div class="pv-exp-row">`
             + `<div class="pv-when">${pvEscape(exp.duration)}</div>`
             + `<div class="pv-what">`
             +   `<span class="pv-role">${pvEscape(exp.title)}</span><br>`
             +   `<span class="pv-org">${orgLine}</span>`
             + `</div>`
             + `</div>`;
-    });
+    };
+
+    let html = education.map(renderRow).join('');
+    html += `<button class="pv-cv-toggle" id="pv-cv-toggle" aria-expanded="false">full cv ↓</button>`;
+    html += `<div class="pv-cv-full" id="pv-cv-full" hidden>${rest.map(renderRow).join('')}</div>`;
+
     host.innerHTML = html;
+
+    document.getElementById('pv-cv-toggle').addEventListener('click', () => {
+        const btn = document.getElementById('pv-cv-toggle');
+        const full = document.getElementById('pv-cv-full');
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        btn.textContent = expanded ? 'full cv ↓' : 'hide ↑';
+        full.hidden = expanded;
+    });
 }
 
 // Initialize Terminal

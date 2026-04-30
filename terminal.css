@@ -894,6 +894,29 @@ body.pv-active {
     font-size: 14px;
 }
 
+/* --- CV toggle --- */
+.pv-cv-toggle {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--pv-mono);
+    font-size: 12.5px;
+    color: var(--pv-muted);
+    letter-spacing: 0.005em;
+    transition: color 0.15s;
+}
+
+.pv-cv-toggle:hover {
+    color: var(--pv-accent);
+}
+
+.pv-cv-full {
+    margin-top: 6px;
+}
+
 /* --- Writing (blog) --- */
 .pv-post {
     padding: 14px 0;
