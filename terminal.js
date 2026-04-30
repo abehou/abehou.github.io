@@ -401,14 +401,11 @@ function renderPlainCV() {
     const rest = entries.filter(([key]) => !key.startsWith('education'));
 
     const renderRow = ([, exp]) => {
-        const orgLine = exp.description
-            ? `${pvEscape(exp.organization)} — ${pvEscape(exp.description)}`
-            : pvEscape(exp.organization);
         return `<div class="pv-exp-row">`
             + `<div class="pv-when">${pvEscape(exp.duration)}</div>`
             + `<div class="pv-what">`
             +   `<span class="pv-role">${pvEscape(exp.title)}</span><br>`
-            +   `<span class="pv-org">${orgLine}</span>`
+            +   `<span class="pv-org">${pvEscape(exp.organization)}</span>`
             + `</div>`
             + `</div>`;
     };
