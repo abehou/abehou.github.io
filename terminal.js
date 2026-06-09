@@ -302,9 +302,37 @@ function pvParseLinks(linksStr) {
         .join('');
 }
 
+function pvRenderInlineMarkdown(s) {
+    return pvEscape(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+}
+
+function pvExtractIntroParagraphs(raw) {
+    if (!raw) return [];
+    const beforeContact = raw.split('CONTACT & SOCIAL')[0] || raw;
+    return beforeContact
+        .split(/\n\s*\n/)
+        .map(paragraph => paragraph.trim().replace(/\n/g, ' '))
+        .filter(paragraph => paragraph)
+        .filter(paragraph => !/[═─]/.test(paragraph));
+}
+
 function renderPlainView() {
+    renderPlainAbout();
     renderPlainPubs();
     renderPlainCV();
+}
+
+function renderPlainAbout() {
+    const host = document.getElementById('pv-about-body');
+    if (!host || !content.me || !content.me.content) return;
+
+    const paragraphs = pvExtractIntroParagraphs(content.me.content);
+    host.innerHTML = paragraphs
+        .map(paragraph => {
+            const className = paragraph.startsWith('I am interested') ? ' class="pv-lede"' : '';
+            return `<p${className}>${pvRenderInlineMarkdown(paragraph)}</p>`;
+        })
+        .join('');
 }
 
 // Highlight the sidebar nav entry whose section is currently in view.

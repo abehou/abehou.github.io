@@ -777,7 +777,8 @@ body.pv-active {
     line-height: 1.65;
 }
 
-.pv-lede em {
+.pv-lede em,
+.pv-lede strong {
     color: var(--pv-accent);
     font-style: normal;
     font-weight: 600;
@@ -1027,4 +1028,3 @@ body.pv-active {
         padding: 36px 24px 80px;
     }
 }
-
