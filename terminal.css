@@ -784,6 +784,20 @@ body.pv-active {
     font-weight: 600;
 }
 
+.pv-about-list {
+    margin: -2px 0 18px 24px;
+    padding: 0;
+    color: var(--pv-ink);
+    font-family: var(--pv-serif);
+    font-size: 17px;
+    line-height: 1.65;
+}
+
+.pv-about-list li {
+    padding-left: 8px;
+    margin-bottom: 6px;
+}
+
 .pv-main a {
     color: var(--pv-ink);
     text-decoration: none;

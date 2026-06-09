@@ -161,7 +161,7 @@ async function loadData() {
     try {
         const dataFiles = ['me', 'publications', 'experiences', 'blog'];
         const promises = dataFiles.map(file => 
-            fetch(`data/${file}.json`)
+            fetch(`data/${file}.json`, { cache: 'no-cache' })
                 .then(response => response.json())
                 .then(data => ({ name: file, data }))
         );
@@ -311,9 +311,36 @@ function pvExtractIntroParagraphs(raw) {
     const beforeContact = raw.split('CONTACT & SOCIAL')[0] || raw;
     return beforeContact
         .split(/\n\s*\n/)
-        .map(paragraph => paragraph.trim().replace(/\n/g, ' '))
+        .map(paragraph => paragraph.trim())
         .filter(paragraph => paragraph)
         .filter(paragraph => !/[═─]/.test(paragraph));
+}
+
+function pvRenderAboutBlock(block) {
+    const lines = block
+        .split('\n')
+        .map(line => line.trim())
+        .filter(Boolean);
+    const firstListIndex = lines.findIndex(line => /^\d+\.\s+/.test(line));
+
+    if (firstListIndex === -1) {
+        const paragraph = lines.join(' ');
+        const className = paragraph.startsWith('I am interested') ? ' class="pv-lede"' : '';
+        return `<p${className}>${pvRenderInlineMarkdown(paragraph)}</p>`;
+    }
+
+    const beforeList = lines.slice(0, firstListIndex).join(' ');
+    const items = lines
+        .slice(firstListIndex)
+        .map(line => line.match(/^\d+\.\s+(.+)$/))
+        .filter(Boolean)
+        .map(([, item]) => `<li>${pvRenderInlineMarkdown(item)}</li>`)
+        .join('');
+
+    const intro = beforeList
+        ? `<p class="pv-lede">${pvRenderInlineMarkdown(beforeList)}</p>`
+        : '';
+    return `${intro}<ol class="pv-about-list">${items}</ol>`;
 }
 
 function renderPlainView() {
@@ -328,10 +355,7 @@ function renderPlainAbout() {
 
     const paragraphs = pvExtractIntroParagraphs(content.me.content);
     host.innerHTML = paragraphs
-        .map(paragraph => {
-            const className = paragraph.startsWith('I am interested') ? ' class="pv-lede"' : '';
-            return `<p${className}>${pvRenderInlineMarkdown(paragraph)}</p>`;
-        })
+        .map(pvRenderAboutBlock)
         .join('');
 }
 

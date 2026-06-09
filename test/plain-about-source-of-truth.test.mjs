@@ -14,6 +14,9 @@ const introSentence =
   'I am interested in understanding **how people can supervise and interpret AI systems when the answers are hard to verify.**';
 
 assert.match(me.content, new RegExp(escapeRegExp(introSentence)));
+assert.match(me.content, /\n1\. models' reasoning process is faithful\n/);
+assert.match(me.content, /\n2\. models' outputs come from a diverse space of plausible answers/);
+assert.doesNotMatch(me.content, /\(1\)|\(2\)/);
 
 assert.match(
   indexHtml,
@@ -31,6 +34,18 @@ assert.match(
   terminalJs,
   /function renderPlainAbout\(\)[\s\S]*content\.me\.content/,
   'terminal.js should render the plain about section from data/me.json',
+);
+
+assert.match(
+  terminalJs,
+  /<ol class="pv-about-list">/,
+  'plain about renderer should preserve numbered-list structure from data/me.json',
+);
+
+assert.match(
+  terminalJs,
+  /fetch\(`data\/\$\{file\}\.json`, \{ cache: 'no-cache' \}\)/,
+  'JSON content fetches should revalidate instead of silently reusing stale cached intro data',
 );
 
 assert.match(
