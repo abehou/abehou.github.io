@@ -2,6 +2,34 @@
   "type": "directory",
   "description": "My research publications",
   "files": {
+    "(NeurIPS TTIC 2026; under review at ICLR 2027) Efficient Test-Time Adaptation through Human-AI Interaction": {
+      "title": "Efficient Test-Time Adaptation through Human-AI Interaction",
+      "authors": "Zora Zhiruo Wang, Apurva Gandhi, Rulin Shao, Aspen Chen, Jonas Mueller, Zhiqi Liang, Jett Chen, Michael Ryan, Qianou Ma, Luxi He, Zhoujun Cheng, Andre He, Seungone Kim, Jiayi Geng, Mingqian Zheng, Weiwei Sun, Zheyuan Zhang, Xinran Zhao, Yike Wang, Abe Hou, Liwei Jiang, Pang Wei Koh, Diyi Yang, Graham Neubig, Daniel Fried",
+      "venue": "NeurIPS TTIC 2026; under review at ICLR 2027",
+      "theme": "non-verifiable-domains",
+      "links": "[Paper] https://arxiv.org/abs/2609.04141"
+    },
+    "(npj Digital Public Health) Comparing the Algorithmic Fidelity of Large Language Models in Predicting Human Decision Making: A Case Study of Vaccination Choice": {
+      "title": "Comparing the Algorithmic Fidelity of Large Language Models in Predicting Human Decision Making: A Case Study of Vaccination Choice",
+      "authors": "Shaochong Xu, Liyue Zhang, Amelia M Jamison, Samee Saiyed, Abe Bohan Hou, Hongru Du, Lauren M Gardner",
+      "venue": "npj Digital Public Health",
+      "theme": "social-simulation",
+      "links": "[Paper] https://www.nature.com/articles/s44482-026-00026-6"
+    },
+    "(EMNLP 2026) One Frozen Simulator is Not Enough: Simulator Collapse in Multi-Agent RL": {
+      "title": "One Frozen Simulator is Not Enough: Simulator Collapse in Multi-Agent RL",
+      "authors": "Simon Yu, Nicholas Tomlin, Marwa Abdulhai, Derek Chong, Ximing Lu, Abe Bohan Hou, Dilara Soylu, Sergey Levine, Christopher D Manning, Weiyan Shi",
+      "venue": "EMNLP 2026",
+      "theme": "social-simulation",
+      "links": "[Paper] https://arxiv.org/abs/2608.12253"
+    },
+    "(Under review at NAACL 2026) A PLEA for Interpretation: Discovering and Prioritizing Legal Conflicts through Multi-Agent Statutory Interpretation": {
+      "title": "A PLEA for Interpretation: Discovering and Prioritizing Legal Conflicts through Multi-Agent Statutory Interpretation",
+      "authors": "Abe Bohan Hou, Lucia Zheng, Joshua Waldman, Daniel E. Ho",
+      "venue": "Under review at NAACL 2026",
+      "theme": "non-verifiable-domains",
+      "links": ""
+    },
     "(COLM 2025) Can A Society of Generative Agents Simulate Human Behavior and Inform Public Health Policy? — A Case Study on Vaccine Hesitancy": {
       "title": "Can A Society of Generative Agents Simulate Human Behavior and Inform Public Health Policy? — A Case Study on Vaccine Hesitancy",
       "authors": "Abe Bohan Hou, Hongru Du, Yichen Wang, Jingyu Zhang, Zixiao Wang, Paul Pu Liang, Daniel Khashabi, Lauren Gardner, Tianxing He",
